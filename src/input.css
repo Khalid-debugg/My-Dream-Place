@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Work+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 *{
     padding: 0;
     margin: 0;
@@ -9,7 +12,48 @@
 }
 @font-face {
     font-family: 'SF Pro Display'; 
-    src: url('./assets/fonts/SFPRODISPLAYREGULAR') format('otf');
+    src: url('./assets/fonts/SF PRO/SFPRODISPLAYREGULAR') format('otf');
     font-weight: normal; 
     font-style: normal; 
+  }
+  @font-face {
+    font-family: 'SF Pro Display Bold'; 
+    src: url('./assets/fonts/SF PRO/SFPRODISPLAYBOLD') format('otf');
+    font-weight: normal; 
+    font-style: normal; 
+  }
+
+@keyframes blueFlash {
+  0% {
+  opacity: 0;    
+  }
+  25% {
+    opacity: 0.5;    
+    }
+    50% {
+      opacity: 1;    
+      }
+  100% {
+    opacity: 0.5;    
+  }
+}
+  @layer utilities {
+    .slide {
+        height: auto;
+        transform: translateY(0);
+    }
+    .selected{
+      outline: 1px solid #2f80ed;
+      background-color: white;
+    }
+    .blue-flash{
+      background-color: #b8d0f0;
+      animation: blueFlash 1s linear;
+    }
+    .smart-phone{
+      width: 719.712px;
+height: 515.599px;
+transform: rotate(-15deg);
+flex-shrink: 0;
+    }
   }
