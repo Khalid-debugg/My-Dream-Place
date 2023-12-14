@@ -1,6 +1,10 @@
 <template>
   <div class="relative mx-auto overflow-hidden">
-    <img :src="`../src/assets/images/Home/${imgLink}`" :alt="header" />
+    <img
+      :src="`../src/assets/images/Home/${imgLink}`"
+      :alt="header"
+      loading="lazy"
+    />
     <div class="flex flex-col gap-2 absolute bottom-0 p-5 text-white">
       <p class="text-[20px] font-[600]">
         {{ header }}

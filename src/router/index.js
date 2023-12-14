@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import DefaultLayout from "../layouts/DefaultLayout.vue";
+import SearchLayout from "../layouts/SearchLayout.vue";
 import AuthLayout from "../layouts/AuthLayout.vue";
 import CheckoutLayout from "../layouts/CheckoutLayout.vue";
 import NotFound from "../layouts/NotFound.vue";
@@ -12,16 +13,17 @@ const router = createRouter({
       component: DefaultLayout,
       children: [
         { path: "", component: () => import("@/views/HomeView.vue") },
-        {
-          path: "search",
-          component: () => import("@/views/SearchResults.vue"),
-        },
+
         {
           path: "product/:id",
           component: () => import("@/views/ProductDetails.vue"),
         },
         { path: "trips", component: () => import("@/views/MyTrips.vue") },
       ],
+    },
+    {
+      path: "/search",
+      component: SearchLayout,
     },
     {
       path: "/auth",

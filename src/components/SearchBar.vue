@@ -84,7 +84,10 @@
         <button
           v-for="(cityOption, index) in cityOptions.value"
           :key="cityOption?.dest_id"
-          @click="selectCity(cityOption)"
+          @click="
+            selectCity(cityOption);
+            dropDown = false;
+          "
           class="p-4"
           :class="{ 'border-b-2': index < cityOptions.value.length - 1 }"
         >
@@ -439,29 +442,29 @@ const isRoomsSelected = ref(false);
 const isInputValid = ref(true);
 const cityInput = ref("");
 const cityOptions = ref([]);
-const getCityOptions = async () => {
-  const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=${cityInput.value}`;
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "5629cf60a9mshc5cae17e59e28c8p1ecd91jsn9feff1f5fa76",
-      "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-    },
-  };
+// const getCityOptions = async () => {
+//   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=${cityInput.value}`;
+//   const options = {
+//     method: "GET",
+//     headers: {
+//       "X-RapidAPI-Key": "5629cf60a9mshc5cae17e59e28c8p1ecd91jsn9feff1f5fa76",
+//       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
+//     },
+//   };
 
-  try {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error("Failed to fetch city options");
-    }
-    const data = await response.json();
-    cityOptions.value = computed(() =>
-      data?.data.filter((city) => city.search_type === "city")
-    );
-  } catch (error) {
-    console.error("Error fetching city options:", error);
-  }
-};
+//   try {
+//     const response = await fetch(url, options);
+//     if (!response.ok) {
+//       throw new Error("Failed to fetch city options");
+//     }
+//     const data = await response.json();
+//     cityOptions.value = computed(() =>
+//       data?.data.filter((city) => city.search_type === "city")
+//     );
+//   } catch (error) {
+//     console.error("Error fetching city options:", error);
+//   }
+// };
 const format = (date) => {
   if (!date) {
     return "";
