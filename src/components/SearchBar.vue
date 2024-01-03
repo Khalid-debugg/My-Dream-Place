@@ -31,10 +31,12 @@
             stroke-width="1.5"
           />
         </svg>
-        <span v-if="!isCitySelected">Where are you going ?</span>
-        <span v-else>{{
-          search.city ? `${search.city.name}` : "Where are you going ?"
-        }}</span>
+        <span v-if="isCitySelected">
+          {{
+            searchStore.city ? searchStore.city?.name : "Where are you going?"
+          }}
+        </span>
+        <span v-else> Where are you going? </span>
         <svg
           v-if="!dropDown"
           xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +106,7 @@
       :class="{ selected: isCheckInSelected, 'blue-flash': !isInputValid }"
     >
       <VueDatePicker
-        v-model="search.checkInDate"
+        v-model="searchStore.checkInDate"
         placeholder="Check in date"
         :enable-time-picker="false"
         :format="format"
@@ -210,15 +212,15 @@
       <VueDatePicker
         class=""
         :format="format"
-        v-model="search.checkOutDate"
+        v-model="searchStore.checkOutDate"
         placeholder="Check out date"
         :enable-time-picker="false"
         :min-date="
-          search.checkInDate
+          searchStore.checkInDate
             ? new Date(
-                search.checkInDate.getFullYear(),
-                search.checkInDate.getMonth(),
-                search.checkInDate.getDate() + 1
+                searchStore.checkInDate.getFullYear(),
+                searchStore.checkInDate.getMonth(),
+                searchStore.checkInDate.getDate() + 1
               )
             : new Date()
         "
@@ -361,7 +363,7 @@
           type="number"
           min="1"
           class="w-10 border-2"
-          v-model="search.guests.adults"
+          v-model="searchStore.adults"
         />
         <span>adults, </span>
 
@@ -369,7 +371,7 @@
           type="number"
           min="0"
           class="w-10 border-2"
-          v-model="search.guests.children"
+          v-model="searchStore.children"
         />
         <span>children</span>
       </div>
@@ -405,7 +407,7 @@
         />
       </svg>
       <input
-        v-model="search.rooms"
+        v-model="searchStore.rooms"
         v-if="isRoomsSelected"
         type="number"
         class="w-10 border-2"
@@ -427,44 +429,44 @@
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed, watch } from "vue";
 import { useSearchStore } from "@/stores/searchStore";
 
 const searchStore = useSearchStore();
-const search = searchStore.searchParams;
-console.log(search);
+console.log(searchStore);
 const dropDown = ref(false);
-const isCitySelected = ref(false);
-const isCheckInSelected = ref(false);
-const isCheckOutSelected = ref(false);
-const isGuestsSelected = ref(false);
-const isRoomsSelected = ref(false);
+const isCitySelected = ref(searchStore.city);
+const isCheckInSelected = ref(searchStore.checkInDate);
+const isCheckOutSelected = ref(searchStore.checkOutDate);
+const isGuestsSelected = ref(searchStore.adults);
+const isRoomsSelected = ref(searchStore.rooms);
 const isInputValid = ref(true);
 const cityInput = ref("");
 const cityOptions = ref([]);
-// const getCityOptions = async () => {
-//   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=${cityInput.value}`;
-//   const options = {
-//     method: "GET",
-//     headers: {
-//       "X-RapidAPI-Key": "5629cf60a9mshc5cae17e59e28c8p1ecd91jsn9feff1f5fa76",
-//       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-//     },
-//   };
 
-//   try {
-//     const response = await fetch(url, options);
-//     if (!response.ok) {
-//       throw new Error("Failed to fetch city options");
-//     }
-//     const data = await response.json();
-//     cityOptions.value = computed(() =>
-//       data?.data.filter((city) => city.search_type === "city")
-//     );
-//   } catch (error) {
-//     console.error("Error fetching city options:", error);
-//   }
-// };
+const getCityOptions = async () => {
+  const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=${cityInput.value}`;
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "81f2f93730msh80a1ac51a85a5f7p1702afjsna6704a34c178",
+      "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Failed to fetch city options");
+    }
+    const data = await response.json();
+    cityOptions.value = computed(() =>
+      data?.data.filter((city) => city.search_type === "city")
+    );
+  } catch (error) {
+    console.error("Error fetching city options:", error);
+  }
+};
 const format = (date) => {
   if (!date) {
     return "";
@@ -476,16 +478,19 @@ const format = (date) => {
   return `${month}-${day}-${year}`;
 };
 const selectCity = (cityOption) => {
-  search.city = cityOption;
-  console.log(search);
+  searchStore.city = cityOption;
 };
 const searchHotels = async () => {
-  if (!search.city || !search.checkInDate || !search.checkOutDate) {
+  if (
+    !searchStore.city ||
+    !searchStore.checkInDate ||
+    !searchStore.checkOutDate
+  ) {
     isInputValid.value = false;
     setTimeout(() => (isInputValid.value = true), 1000);
     return;
   }
-  await searchStore.sendSearchRequest(search.value);
+  await searchStore.sendSearchRequest(searchStore.value);
 };
 </script>
 <script>

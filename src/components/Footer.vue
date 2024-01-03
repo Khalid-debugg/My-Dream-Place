@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[88%] mx-auto text-[14px] flex flex-wrap justify-around mt-20 gap-10 py-14"
+    class="w-[88%] mx-auto text-[14px] flex flex-wrap justify-around mt-10 gap-10 py-14"
   >
     <section>
       <header>

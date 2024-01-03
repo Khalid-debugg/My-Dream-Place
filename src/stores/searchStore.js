@@ -1,56 +1,55 @@
 import { defineStore } from "pinia";
 export const useSearchStore = defineStore("search", {
   state: () => ({
-    searchResults: null,
-    searchParams: {
-      city: null,
-      checkInDate: null,
-      checkOutDate: null,
-      guests: {
-        adults: 1,
-        children: 0,
-      },
-      rooms: 1,
-    },
+    searchResults: [],
+    city: null,
+    checkInDate: null,
+    checkOutDate: null,
+    adults: null,
+    children: null,
+    rooms: null,
   }),
   actions: {
-    async sendSearchRequest() {
+    async sendSearchRequest(minPrice, maxPrice, sortID, pageNumber = 1) {
       const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=${
-        this.searchParams.city?.dest_id
-      }&search_type=${
-        this.searchParams.city?.search_type
-      }&arrival_date=${this.formatDate(
-        this.searchParams.checkInDate
-      )}&departure_date=${this.formatDate(
-        this.searchParams.checkOutDate
-      )}&adults=${this.searchParams.guests.adults}&children_age=${
-        this.searchParams.guests.children
-      }&room_qty=${
-        this.searchParams.rooms
-      }&page_number=1&languagecode=en-us&currency_code=AED`;
+        this.city.dest_id
+      }&search_type=CITY&arrival_date=${this.formatDate(
+        this.checkInDate
+      )}&departure_date=${this.formatDate(this.checkOutDate)}&adults=${
+        this.adults
+      }&children_age=${this.children}%2C17&room_qty=${
+        this.rooms
+      }&page_number=${pageNumber}&price_min=${minPrice || ""}&price_max=${
+        maxPrice || ""
+      }&sort_by=${sortID || ""}&languagecode=en-us&currency_code=USD`;
       const options = {
         method: "GET",
         headers: {
           "X-RapidAPI-Key":
-            "5629cf60a9mshc5cae17e59e28c8p1ecd91jsn9feff1f5fa76",
+            "81f2f93730msh80a1ac51a85a5f7p1702afjsna6704a34c178",
 
           "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
         },
       };
 
       try {
+        console.log(url);
         const response = await fetch(url, options);
-        const result = await response.text();
-        console.log(result);
+        const result = await response.json();
+        this.searchResults = result;
+        console.log(this.searchResults);
       } catch (error) {
         console.error(error);
+        alert("Please enter valid data");
       }
     },
     formatDate(date) {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1);
       const day = String(date.getDate());
-      return `${year}-${month}-${day}`;
+      return `${year}-${month < 10 ? "0" + month : month}-${
+        day < 10 ? "0" + day : day
+      }`;
     },
   },
 });

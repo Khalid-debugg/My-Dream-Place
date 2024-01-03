@@ -4,7 +4,9 @@
       class="bg-gradient-to-b from-[#2969BF] to-[#144E9D] h-[200px] absolute top-0 w-full"
     ></div>
     <SearchBar class="relative top-[5.5rem]" />
-    <div class="w-[85%] mx-auto mt-48">
+    <div
+      class="w-[88%] max-w-[1440px] mx-auto mt-[10rem] flex flex-col md:flex-row gap-5"
+    >
       <aside class="w-[295px] flex flex-col gap-5">
         <section class="bg-[#F2F2F2] flex flex-col gap-5 p-6 rounded-md">
           <p class="font-[500]">Search by property name</p>
@@ -33,11 +35,15 @@
                 />
               </svg>
             </button>
-            <input type="text" placeholder="eg. Beach westpalm" />
+            <input
+              type="text"
+              placeholder="eg. Beach westpalm"
+              class="outline-0"
+            />
           </div>
         </section>
         <p class="font-[600] text-[18px] px-5">Filter by</p>
-        <section class="rounded-md border">
+        <section class="rounded-md border flex flex-col gap-2">
           <p class="bg-[#F2F2F2] font-[500] p-5">Your budget per day</p>
           <div class="flex flex-col gap-2 bg-white p-5 rounded-b-md">
             <label
@@ -53,6 +59,44 @@
               />
               ${{ option.min }} - ${{ option.max }}
             </label>
+          </div>
+          <div class="flex justify-between px-5 mb-2">
+            <p>Set your own budget</p>
+            <Switch
+              v-model="isBudgetCustom"
+              :class="isBudgetCustom ? 'bg-blue-600' : 'bg-gray-200'"
+              class="relative inline-flex h-6 w-11 items-center rounded-full"
+            >
+              <span class="sr-only">Enable notifications</span>
+              <span
+                :class="isBudgetCustom ? 'translate-x-6' : 'translate-x-1'"
+                class="inline-block h-4 w-4 transform rounded-full bg-white transition"
+              />
+            </Switch>
+          </div>
+          <div
+            class="flex flex-col gap-2 px-5 py-3 border-dashed border w-[257px] mx-auto mb-3"
+            v-if="isBudgetCustom"
+          >
+            <div class="flex justify-center gap-3">
+              <input
+                v-model="customMinBudget"
+                @keypress.enter="updateBudget"
+                type="number"
+                min="0"
+                class="border p-3 rounded-md text-[12px] w-[103px]"
+                placeholder="Min budget"
+              />
+              <input
+                v-model="customMaxBudget"
+                @keypress.enter="updateBudget"
+                type="number"
+                min="0"
+                class="border p-3 rounded-md text-[12px] w-[103px]"
+                placeholder="Max budget"
+              />
+            </div>
+            <p class="text-[12px]">Press Enter to filter</p>
           </div>
         </section>
         <section class="rounded-md border">
@@ -91,13 +135,30 @@
           </div>
         </section>
       </aside>
-      <main></main>
+      <main class="flex flex-col gap-6 w-full">
+        <div class="flex items-center">
+          <h2 class="text-[24px] font-[600]">
+            {{ searchStore.city.name }} : {{ metaTitle }} search results found
+          </h2>
+        </div>
+        <HotelCard
+          v-for="hotel in hotels.slice(0, 1)"
+          :key="hotel.id"
+          :name="hotel.property.name"
+          :reviewScore="hotel.property.reviewScore"
+          :reviewCount="hotel.property.reviewCount"
+          :photoUrl="hotel.property.photoUrls[0]"
+          :hotelID="hotel.property.id"
+          :hotelDescription="hotel.accessibilityLabel"
+        />
+      </main>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
+import { useSearchStore } from "@/stores/searchStore";
 const budgets = ref([
   { min: 0, max: 200 },
   { min: 200, max: 500 },
@@ -105,8 +166,15 @@ const budgets = ref([
   { min: 1000, max: 2000 },
   { min: 2000, max: 5000 },
 ]);
+const searchStore = useSearchStore();
+console.log(searchStore);
 const selectedStars = ref(5);
 const selectedBudget = ref(null);
+const isBudgetCustom = ref(false);
+const customMinBudget = ref(0);
+const customMaxBudget = ref(0);
+const hotels = searchStore.searchResults.data.hotels;
+const metaTitle = searchStore.searchResults.data.meta[0].title.split(" ")[0];
 
 const handleBudgetChange = (option) => {
   if (selectedBudget.value === option) {
@@ -116,14 +184,28 @@ const handleBudgetChange = (option) => {
   }
   console.log(selectedBudget.value);
 };
+const updateBudget = () => {
+  if (customMinBudget.value > customMaxBudget.value) {
+    alert("Please enter a valid budget");
+    selectedBudget.value = null;
+    return;
+  }
+  selectedBudget.value = {
+    min: customMinBudget.value,
+    max: customMaxBudget.value,
+  };
+};
 const rate = (stars) => {
   selectedStars.value = stars;
 };
 </script>
 <script>
 import SearchBar from "../components/SearchBar.vue";
+import HotelCard from "../components/HotelCard.vue";
+import { Switch } from "@headlessui/vue";
+
 export default {
-  components: { SearchBar },
+  components: { SearchBar, Switch, HotelCard },
 };
 </script>
 <style lang="scss" scoped>

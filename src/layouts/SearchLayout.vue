@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavBar layout="Search" /> <SearchResults />
-    <Restriction class="w-[85%] mx-auto" /> <Footer />
+    <Restriction class="w-[88%] mx-auto" /> <Footer />
   </div>
 </template>
 
