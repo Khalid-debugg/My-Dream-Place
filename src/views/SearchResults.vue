@@ -36,6 +36,7 @@
               </svg>
             </button>
             <input
+              v-model="propertyInput"
               type="text"
               placeholder="eg. Beach westpalm"
               class="outline-0"
@@ -142,7 +143,7 @@
           </h2>
         </div>
         <HotelCard
-          v-for="hotel in hotels.slice(0, 1)"
+          v-for="hotel in filteredHotels"
           :key="hotel.id"
           :name="hotel.property.name"
           :reviewScore="hotel.property.reviewScore"
@@ -167,14 +168,27 @@ const budgets = ref([
   { min: 2000, max: 5000 },
 ]);
 const searchStore = useSearchStore();
-console.log(searchStore);
+const propertyInput = ref("");
 const selectedStars = ref(5);
 const selectedBudget = ref(null);
 const isBudgetCustom = ref(false);
 const customMinBudget = ref(0);
 const customMaxBudget = ref(0);
-const hotels = searchStore.searchResults.data.hotels;
+const originalHotels = ref(searchStore.searchResults.data.hotels);
+const filteredHotels = ref([...originalHotels.value]);
 const metaTitle = searchStore.searchResults.data.meta[0].title.split(" ")[0];
+watch([propertyInput, selectedStars], () => {
+  console.log(originalHotels.value, filteredHotels.value, propertyInput.value);
+  filteredHotels.value = computed(() =>
+    originalHotels.value.filter(
+      (hotel) =>
+        hotel.property.name
+          .toLowerCase()
+          .includes(propertyInput.value.toLowerCase()) &&
+        hotel.property.reviewScore > selectedStars.value
+    )
+  ).value;
+});
 
 const handleBudgetChange = (option) => {
   if (selectedBudget.value === option) {

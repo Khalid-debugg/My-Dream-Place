@@ -16,9 +16,9 @@ export const useSearchStore = defineStore("search", {
       }&search_type=CITY&arrival_date=${this.formatDate(
         this.checkInDate
       )}&departure_date=${this.formatDate(this.checkOutDate)}&adults=${
-        this.adults
-      }&children_age=${this.children}%2C17&room_qty=${
-        this.rooms
+        this.adults || 1
+      }&children_age=${this.children || 0}%2C17&room_qty=${
+        this.rooms || 1
       }&page_number=${pageNumber}&price_min=${minPrice || ""}&price_max=${
         maxPrice || ""
       }&sort_by=${sortID || ""}&languagecode=en-us&currency_code=USD`;
