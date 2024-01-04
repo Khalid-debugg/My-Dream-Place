@@ -104,8 +104,6 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import { useSearchStore } from "../stores/searchStore";
-const searchStore = useSearchStore();
-console.log(searchStore);
 const strikeThroughAmount = ref(0);
 const grossAmount = ref(0);
 const discountRatio = ref(0);
@@ -119,51 +117,20 @@ const props = defineProps([
 ]);
 
 const hotelDescriptionLoading = ref(true);
-onMounted(async () => {
-  const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=${
-    props.hotelID
-  }&arrival_date=${searchStore.formatDate(
-    searchStore.checkInDate
-  )}&departure_date=${searchStore.formatDate(
-    searchStore.checkOutDate
-  )}&adults=${searchStore.adults}&children_age=${
-    searchStore.children
-  }%2C17&room_qty=${searchStore.rooms}&languagecode=en-us&currency_code=USD`;
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "81f2f93730msh80a1ac51a85a5f7p1702afjsna6704a34c178",
-      "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-    },
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-
-    console.log(result);
-    strikeThroughAmount.value = Math.round(
-      result.data.product_price_breakdown.strikethrough_amount?.value
-    );
-    grossAmount.value = Math.round(
-      result.data.product_price_breakdown.gross_amount.value
-    );
-    discountRatio.value = Math.round(
-      ((strikeThroughAmount.value - grossAmount.value) /
-        strikeThroughAmount.value) *
-        100
-    );
-  } catch (error) {
-    console.error(error);
-  }
-});
 // onMounted(async () => {
-//   const url =
-//     "https://booking-com15.p.rapidapi.com/api/v1/hotels/getDescriptionAndInfo?hotel_id=5955189&languagecode=en-us";
+//   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=${
+//     props.hotelID
+//   }&arrival_date=${searchStore.formatDate(
+//     searchStore.checkInDate
+//   )}&departure_date=${searchStore.formatDate(
+//     searchStore.checkOutDate
+//   )}&adults=${searchStore.adults}&children_age=${
+//     searchStore.children
+//   }%2C17&room_qty=${searchStore.rooms}&languagecode=en-us&currency_code=USD`;
 //   const options = {
 //     method: "GET",
 //     headers: {
-//       "X-RapidAPI-Key": "577e54071bmsh0386513e6c5bc31p16f6a7jsn7ab94d9a7f87",
+//       'X-RapidAPI-Key': '7b2f1c3d7bmshc252119acedd28dp1c6c92jsn8111cc04fee9',
 //       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
 //     },
 //   };
@@ -171,11 +138,19 @@ onMounted(async () => {
 //   try {
 //     const response = await fetch(url, options);
 //     const result = await response.json();
-//     hotelDescription.value = result.data;
-//     console.log(result);
-//     hotelDescriptionLoading.value = false;
 
-//     return result;
+//     console.log(result);
+//     strikeThroughAmount.value = Math.round(
+//       result.data.product_price_breakdown.strikethrough_amount?.value
+//     );
+//     grossAmount.value = Math.round(
+//       result.data.product_price_breakdown.gross_amount.value
+//     );
+//     discountRatio.value = Math.round(
+//       ((strikeThroughAmount.value - grossAmount.value) /
+//         strikeThroughAmount.value) *
+//         100
+//     );
 //   } catch (error) {
 //     console.error(error);
 //   }

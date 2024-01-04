@@ -431,9 +431,9 @@ import "@vuepic/vue-datepicker/dist/main.css";
 
 import { ref, onMounted, onUnmounted, computed, watch } from "vue";
 import { useSearchStore } from "@/stores/searchStore";
-
+import { storeToRefs } from "pinia";
 const searchStore = useSearchStore();
-console.log(searchStore);
+const { searchResults } = storeToRefs(searchStore);
 const dropDown = ref(false);
 const isCitySelected = ref(searchStore.city);
 const isCheckInSelected = ref(searchStore.checkInDate);
@@ -449,7 +449,7 @@ const getCityOptions = async () => {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "81f2f93730msh80a1ac51a85a5f7p1702afjsna6704a34c178",
+      "X-RapidAPI-Key": "7b2f1c3d7bmshc252119acedd28dp1c6c92jsn8111cc04fee9",
       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
     },
   };

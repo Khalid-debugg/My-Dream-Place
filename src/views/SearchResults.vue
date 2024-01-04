@@ -7,7 +7,7 @@
     <div
       class="w-[88%] max-w-[1440px] mx-auto mt-[10rem] flex flex-col md:flex-row gap-5"
     >
-      <aside class="w-[295px] flex flex-col gap-5">
+      <aside class="sticky w-[295px] flex flex-col gap-5 top-0">
         <section class="bg-[#F2F2F2] flex flex-col gap-5 p-6 rounded-md">
           <p class="font-[500]">Search by property name</p>
           <div class="flex gap-2 p-3 rounded bg-white">
@@ -137,10 +137,36 @@
         </section>
       </aside>
       <main class="flex flex-col gap-6 w-full">
-        <div class="flex items-center">
+        <div class="flex items-center justify-between">
           <h2 class="text-[24px] font-[600]">
-            {{ searchStore.city.name }} : {{ metaTitle }} search results found
+            {{ filteredHotels[0].property.wishlistName }} :
+            {{ metaTitle }} search results found
           </h2>
+          <div class="flex items-center p-3 rounded-md border cursor-pointer">
+            <div class="w-[190px]">
+              <p class="font-[500] text-[12px] text-[#918f8f]">Sort by</p>
+              <p class="font-[400] text-[14px] leading-[18px]">
+                {{ "Recommended" }}
+              </p>
+            </div>
+            <svg
+              v-if="!dropDown"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                d="M13.2797 5.96655L8.93306 10.3132C8.41973 10.8266 7.57973 10.8266 7.06639 10.3132L2.71973 5.96655"
+                stroke="#828282"
+                stroke-width="2"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
         </div>
         <HotelCard
           v-for="hotel in filteredHotels"
@@ -159,6 +185,7 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
+import { storeToRefs } from "pinia";
 import { useSearchStore } from "@/stores/searchStore";
 const budgets = ref([
   { min: 0, max: 200 },
@@ -174,18 +201,17 @@ const selectedBudget = ref(null);
 const isBudgetCustom = ref(false);
 const customMinBudget = ref(0);
 const customMaxBudget = ref(0);
-const originalHotels = ref(searchStore.searchResults.data.hotels);
-const filteredHotels = ref([...originalHotels.value]);
+const originalHotels = computed(() => searchStore.searchResults.data.hotels);
+const filteredHotels = computed(() => [...originalHotels.value]);
 const metaTitle = searchStore.searchResults.data.meta[0].title.split(" ")[0];
 watch([propertyInput, selectedStars], () => {
-  console.log(originalHotels.value, filteredHotels.value, propertyInput.value);
   filteredHotels.value = computed(() =>
     originalHotels.value.filter(
       (hotel) =>
         hotel.property.name
           .toLowerCase()
           .includes(propertyInput.value.toLowerCase()) &&
-        hotel.property.reviewScore > selectedStars.value
+        hotel.property.reviewScore >= selectedStars.value
     )
   ).value;
 });
@@ -217,6 +243,7 @@ const rate = (stars) => {
 import SearchBar from "../components/SearchBar.vue";
 import HotelCard from "../components/HotelCard.vue";
 import { Switch } from "@headlessui/vue";
+import { storeToRefs } from "pinia";
 
 export default {
   components: { SearchBar, Switch, HotelCard },

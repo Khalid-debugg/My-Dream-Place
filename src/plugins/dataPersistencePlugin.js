@@ -1,6 +1,5 @@
 export default function dataPersistence(context) {
   const storeKey = context.store.$id;
-  console.log(storeKey);
   const initialState = sessionStorage.getItem(storeKey)
     ? {
         searchResults: JSON.parse(sessionStorage.getItem(storeKey))

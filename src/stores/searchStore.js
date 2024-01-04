@@ -10,7 +10,7 @@ export const useSearchStore = defineStore("search", {
     rooms: null,
   }),
   actions: {
-    async sendSearchRequest(minPrice, maxPrice, sortID, pageNumber = 1) {
+    async sendSearchRequest(minPrice, maxPrice, sortID, pageNumber) {
       const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=${
         this.city.dest_id
       }&search_type=CITY&arrival_date=${this.formatDate(
@@ -19,14 +19,14 @@ export const useSearchStore = defineStore("search", {
         this.adults || 1
       }&children_age=${this.children || 0}%2C17&room_qty=${
         this.rooms || 1
-      }&page_number=${pageNumber}&price_min=${minPrice || ""}&price_max=${
+      }&page_number=${pageNumber || 1}&price_min=${minPrice || ""}&price_max=${
         maxPrice || ""
       }&sort_by=${sortID || ""}&languagecode=en-us&currency_code=USD`;
       const options = {
         method: "GET",
         headers: {
           "X-RapidAPI-Key":
-            "81f2f93730msh80a1ac51a85a5f7p1702afjsna6704a34c178",
+            "7b2f1c3d7bmshc252119acedd28dp1c6c92jsn8111cc04fee9",
 
           "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
         },
