@@ -136,36 +136,84 @@
           </div>
         </section>
       </aside>
-      <main class="flex flex-col gap-6 w-full">
+      <main class="flex flex-col gap-5 w-full">
         <div class="flex items-center justify-between">
           <h2 class="text-[24px] font-[600]">
             {{ filteredHotels[0].property.wishlistName }} :
             {{ metaTitle }} search results found
           </h2>
-          <div class="flex items-center p-3 rounded-md border cursor-pointer">
-            <div class="w-[190px]">
-              <p class="font-[500] text-[12px] text-[#918f8f]">Sort by</p>
-              <p class="font-[400] text-[14px] leading-[18px]">
-                {{ "Recommended" }}
-              </p>
-            </div>
-            <svg
-              v-if="!dropDown"
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
+          <div class="p-3 rounded-md border relative w-[190px]">
+            <button
+              class="flex justify-between items-center w-full"
+              @click="dropDown = !dropDown"
             >
-              <path
-                d="M13.2797 5.96655L8.93306 10.3132C8.41973 10.8266 7.57973 10.8266 7.06639 10.3132L2.71973 5.96655"
-                stroke="#828282"
-                stroke-width="2"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+              <div class="flex flex-col gap-[0.3rem] items-start text-left">
+                <p class="font-[500] text-[12px] text-[#918f8f]">Sort by</p>
+                <p class="font-[400] text-[14px] leading-[18px]">
+                  {{ sortTitle }}
+                </p>
+              </div>
+              <svg
+                v-if="!dropDown"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M13.2797 5.96655L8.93306 10.3132C8.41973 10.8266 7.57973 10.8266 7.06639 10.3132L2.71973 5.96655"
+                  stroke="#828282"
+                  stroke-width="2"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <svg
+                v-else
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M2.72027 10.0334L7.06694 5.68678C7.58027 5.17345 8.42027 5.17345 8.93361 5.68678L13.2803 10.0334"
+                  stroke="#828282"
+                  stroke-width="2"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <div
+              class="flex flex-col items-start absolute bg-white left-0 top-20 w-full rounded-md h-0 overflow-hidden translate-y-[-20px] transition-all duration-300 ease-in-out"
+              :class="{ slide: dropDown }"
+            >
+              <button
+                @click="
+                  sortID = 'recommended';
+                  sortTitle = 'Recommended';
+                "
+                class="border-b w-full p-2 text-left"
+              >
+                Recommended
+              </button>
+              <button
+                v-for="(sortOption, index) in sortOptions"
+                :key="sortOption.id"
+                @click="
+                  sortID = sortOption.id;
+                  sortTitle = sortOption.title;
+                "
+                class="text-left w-full p-2"
+                :class="{ 'border-b-2': index < sortOptions.length - 1 }"
+              >
+                {{ sortOption.title }}
+              </button>
+            </div>
           </div>
         </div>
         <HotelCard
@@ -195,7 +243,11 @@ const budgets = ref([
   { min: 2000, max: 5000 },
 ]);
 const searchStore = useSearchStore();
+const dropDown = ref(false);
 const propertyInput = ref("");
+const sortOptions = ref([]);
+const sortID = ref("recommended");
+const sortTitle = ref("Recommended");
 const selectedStars = ref(5);
 const selectedBudget = ref(null);
 const isBudgetCustom = ref(false);
@@ -214,6 +266,30 @@ watch([propertyInput, selectedStars], () => {
         hotel.property.reviewScore >= selectedStars.value
     )
   ).value;
+});
+onMounted(async () => {
+  console.log(searchStore);
+  const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getSortBy?dest_id=${
+    searchStore.city.dest_id
+  }&search_type=CITY&arrival_date=${searchStore.formatDate(
+    searchStore.checkInDate
+  )}&departure_date=${searchStore.formatDate(searchStore.checkOutDate)}`;
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "6cb2b953demsh5536b89e44c6bbbp1557c2jsnf4dba04990e6",
+      "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
+    },
+  };
+  console.log(url);
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    sortOptions.value = result.data;
+    console.log(result.data);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 const handleBudgetChange = (option) => {

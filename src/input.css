@@ -41,6 +41,7 @@
     .slide {
         height: auto;
         transform: translateY(0);
+        border-width: 1px;
     }
     .selected{
       outline: 1px solid #2f80ed;

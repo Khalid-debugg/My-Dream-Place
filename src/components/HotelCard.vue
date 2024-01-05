@@ -130,7 +130,7 @@ const hotelDescriptionLoading = ref(true);
 //   const options = {
 //     method: "GET",
 //     headers: {
-//       'X-RapidAPI-Key': '7b2f1c3d7bmshc252119acedd28dp1c6c92jsn8111cc04fee9',
+//  'X-RapidAPI-Key': '6cb2b953demsh5536b89e44c6bbbp1557c2jsnf4dba04990e6',
 //       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
 //     },
 //   };
