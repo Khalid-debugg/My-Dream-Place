@@ -14,7 +14,7 @@ export const useSearchStore = defineStore("search", {
       const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=${
         this.city.dest_id
       }&search_type=CITY&arrival_date=${this.formatDate(
-        this.checkInDate
+        this.checkInDate,
       )}&departure_date=${this.formatDate(this.checkOutDate)}&adults=${
         this.adults || 1
       }&children_age=${this.children || 0}%2C17&room_qty=${
@@ -25,8 +25,8 @@ export const useSearchStore = defineStore("search", {
       const options = {
         method: "GET",
         headers: {
-          "X-RapidAPI-Key":
-            "6cb2b953demsh5536b89e44c6bbbp1557c2jsnf4dba04990e6",
+          'X-RapidAPI-Key': 'd86ce96fe4msh1ed48c85b26cdf0p1140f5jsnb671c1e0d0e3',
+
 
           "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
         },

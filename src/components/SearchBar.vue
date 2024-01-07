@@ -220,7 +220,7 @@
             ? new Date(
                 searchStore.checkInDate.getFullYear(),
                 searchStore.checkInDate.getMonth(),
-                searchStore.checkInDate.getDate() + 1
+                searchStore.checkInDate.getDate() + 1,
               )
             : new Date()
         "
@@ -424,8 +424,8 @@
     </button>
   </div>
 </template>
-  
-  <script setup>
+
+<script setup>
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 
@@ -449,7 +449,7 @@ const getCityOptions = async () => {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "6cb2b953demsh5536b89e44c6bbbp1557c2jsnf4dba04990e6",
+      "X-RapidAPI-Key": "d86ce96fe4msh1ed48c85b26cdf0p1140f5jsnb671c1e0d0e3",
       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
     },
   };
@@ -461,7 +461,7 @@ const getCityOptions = async () => {
     }
     const data = await response.json();
     cityOptions.value = computed(() =>
-      data?.data.filter((city) => city.search_type === "city")
+      data?.data.filter((city) => city.search_type === "city"),
     );
   } catch (error) {
     console.error("Error fetching city options:", error);

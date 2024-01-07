@@ -139,7 +139,7 @@
       <main class="flex flex-col gap-5 w-full">
         <div class="flex items-center justify-between">
           <h2 class="text-[24px] font-[600]">
-            {{ filteredHotels[0].property.wishlistName }} :
+            {{ filteredHotels[0]?.property.wishlistName }} :
             {{ metaTitle }} search results found
           </h2>
           <div class="p-3 rounded-md border relative w-[190px]">
@@ -246,38 +246,36 @@ const searchStore = useSearchStore();
 const dropDown = ref(false);
 const propertyInput = ref("");
 const sortOptions = ref([]);
-const sortID = ref("recommended");
+const sortID = ref(null);
 const sortTitle = ref("Recommended");
+const pageNumber = ref(1);
 const selectedStars = ref(5);
 const selectedBudget = ref(null);
 const isBudgetCustom = ref(false);
-const customMinBudget = ref(0);
-const customMaxBudget = ref(0);
+const customMinBudget = ref(null);
+const customMaxBudget = ref(null);
 const originalHotels = computed(() => searchStore.searchResults.data.hotels);
-const filteredHotels = computed(() => [...originalHotels.value]);
+const filteredHotels = computed(() =>
+  originalHotels.value.filter(
+    (hotel) =>
+      hotel.property.name
+        .toLowerCase()
+        .includes(propertyInput.value.toLowerCase()) &&
+      hotel.property.reviewScore >= selectedStars.value,
+  ),
+);
 const metaTitle = searchStore.searchResults.data.meta[0].title.split(" ")[0];
-watch([propertyInput, selectedStars], () => {
-  filteredHotels.value = computed(() =>
-    originalHotels.value.filter(
-      (hotel) =>
-        hotel.property.name
-          .toLowerCase()
-          .includes(propertyInput.value.toLowerCase()) &&
-        hotel.property.reviewScore >= selectedStars.value
-    )
-  ).value;
-});
 onMounted(async () => {
   console.log(searchStore);
   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getSortBy?dest_id=${
     searchStore.city.dest_id
   }&search_type=CITY&arrival_date=${searchStore.formatDate(
-    searchStore.checkInDate
+    searchStore.checkInDate,
   )}&departure_date=${searchStore.formatDate(searchStore.checkOutDate)}`;
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "6cb2b953demsh5536b89e44c6bbbp1557c2jsnf4dba04990e6",
+      "X-RapidAPI-Key": "d86ce96fe4msh1ed48c85b26cdf0p1140f5jsnb671c1e0d0e3",
       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
     },
   };
@@ -298,7 +296,8 @@ const handleBudgetChange = (option) => {
   } else {
     selectedBudget.value = option;
   }
-  console.log(selectedBudget.value);
+  customMinBudget.value = selectedBudget.value.min;
+  customMaxBudget.value = selectedBudget.value.max;
 };
 const updateBudget = () => {
   if (customMinBudget.value > customMaxBudget.value) {
@@ -325,5 +324,4 @@ export default {
   components: { SearchBar, Switch, HotelCard },
 };
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
