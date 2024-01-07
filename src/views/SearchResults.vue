@@ -253,8 +253,9 @@ const selectedBudget = ref(null);
 const isBudgetCustom = ref(false);
 const customMinBudget = ref(0);
 const customMaxBudget = ref(0);
-const originalHotels = computed(() => searchStore.searchResults.data.hotels);
-const filteredHotels = computed(() => [...originalHotels.value]);
+const originalHotels = ref(searchStore.searchResults.data.hotels);
+const filteredHotels = ref([...originalHotels.value]);
+
 const metaTitle = searchStore.searchResults.data.meta[0].title.split(" ")[0];
 watch([propertyInput, selectedStars], () => {
   filteredHotels.value = computed(() =>
@@ -263,8 +264,8 @@ watch([propertyInput, selectedStars], () => {
         hotel.property.name
           .toLowerCase()
           .includes(propertyInput.value.toLowerCase()) &&
-        hotel.property.reviewScore >= selectedStars.value
-    )
+        hotel.property.reviewScore >= selectedStars.value,
+    ),
   ).value;
 });
 onMounted(async () => {
@@ -272,7 +273,7 @@ onMounted(async () => {
   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getSortBy?dest_id=${
     searchStore.city.dest_id
   }&search_type=CITY&arrival_date=${searchStore.formatDate(
-    searchStore.checkInDate
+    searchStore.checkInDate,
   )}&departure_date=${searchStore.formatDate(searchStore.checkOutDate)}`;
   const options = {
     method: "GET",
@@ -325,5 +326,4 @@ export default {
   components: { SearchBar, Switch, HotelCard },
 };
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
