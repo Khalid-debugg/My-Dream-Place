@@ -252,6 +252,7 @@ const pageNumber = ref(1);
 const selectedStars = ref(5);
 const selectedBudget = ref(null);
 const isBudgetCustom = ref(false);
+<<<<<<< HEAD
 const customMinBudget = ref(null);
 const customMaxBudget = ref(null);
 const originalHotels = computed(() => searchStore.searchResults.data.hotels);
@@ -265,6 +266,25 @@ const filteredHotels = computed(() =>
   ),
 );
 const metaTitle = searchStore.searchResults.data.meta[0].title.split(" ")[0];
+=======
+const customMinBudget = ref(0);
+const customMaxBudget = ref(0);
+const originalHotels = ref(searchStore.searchResults.data.hotels);
+const filteredHotels = ref([...originalHotels.value]);
+
+const metaTitle = searchStore.searchResults.data.meta[0].title.split(" ")[0];
+watch([propertyInput, selectedStars], () => {
+  filteredHotels.value = computed(() =>
+    originalHotels.value.filter(
+      (hotel) =>
+        hotel.property.name
+          .toLowerCase()
+          .includes(propertyInput.value.toLowerCase()) &&
+        hotel.property.reviewScore >= selectedStars.value,
+    ),
+  ).value;
+});
+>>>>>>> f7af7e0c7f2989aeb837c3b5c0b1dde7db0b4f17
 onMounted(async () => {
   console.log(searchStore);
   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getSortBy?dest_id=${
