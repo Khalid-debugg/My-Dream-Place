@@ -14,6 +14,9 @@ export default function dataPersistence(context) {
         adults: JSON.parse(sessionStorage.getItem(storeKey)).adults,
         children: JSON.parse(sessionStorage.getItem(storeKey)).children,
         rooms: JSON.parse(sessionStorage.getItem(storeKey)).rooms,
+        totalHotelsNumber: parseInt(
+          JSON.parse(sessionStorage.getItem(storeKey)).totalHotelsNumber
+        ),
       }
     : {};
   context.store.$state = initialState;
