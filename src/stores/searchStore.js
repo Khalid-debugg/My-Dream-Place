@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { ref } from "vue";
 export const useSearchStore = defineStore("search", () => {
   const searchResults = ref([]);
   const city = ref(null);
@@ -59,6 +60,7 @@ export const useSearchStore = defineStore("search", () => {
     rooms,
     adults,
     children,
+    totalHotelsNumber,
     sendSearchRequest,
     formatDate,
   ];

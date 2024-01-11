@@ -140,7 +140,7 @@
         <div class="flex items-center justify-between">
           <h2 class="text-[24px] font-[600]">
             {{ filteredHotels[0]?.property.wishlistName }} :
-            {{ metaTitle }} search results found
+            {{ searchStore.totalHotelsNumber }} search results found
           </h2>
           <div class="p-3 rounded-md border relative w-[190px]">
             <button
@@ -271,7 +271,6 @@ const filteredHotels = computed(() =>
       hotel.property.reviewScore >= selectedStars.value
   )
 );
-const metaTitle = searchStore.searchResults.data.meta[0].title.split(" ")[0];
 onMounted(async () => {
   console.log(searchStore);
   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getSortBy?dest_id=${
