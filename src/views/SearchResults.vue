@@ -139,8 +139,12 @@
       <main class="flex flex-col gap-5 w-full">
         <div class="flex items-center justify-between">
           <h2 class="text-[24px] font-[600]">
-            {{ filteredHotels[0]?.property.wishlistName }} :
-            {{ searchStore.totalHotelsNumber }} search results found
+            {{
+              filteredHotels
+                ? filteredHotels[0]?.property.wishlistName
+                : "loading..."
+            }}
+            : {{ searchStore.totalHotelsNumber }} search results found
           </h2>
           <div class="p-3 rounded-md border relative w-[190px]">
             <button
@@ -216,17 +220,22 @@
             </div>
           </div>
         </div>
-        <HotelCard
-          v-for="hotel in filteredHotels"
-          :key="hotel.id"
-          :name="hotel.property.name"
-          :reviewScore="hotel.property.reviewScore"
-          :reviewCount="hotel.property.reviewCount"
-          :photoUrl="hotel.property.photoUrls[0]"
-          :hotelID="hotel.property.id"
-          :hotelDescription="hotel.accessibilityLabel"
-        />
+        <div v-if="filteredHotels">
+          <HotelCard
+            v-for="hotel in filteredHotels"
+            :key="hotel.id"
+            :name="hotel.property.name"
+            :reviewScore="hotel.property.reviewScore"
+            :reviewCount="hotel.property.reviewCount"
+            :photoUrl="hotel.property.photoUrls[0]"
+            :hotelID="hotel.property.id"
+            :hotelDescription="hotel.accessibilityLabel"
+          />
+        </div>
+        <div v-else>Loading ...</div>
         <vue-awesome-paginate
+          class="my-5"
+          v-if="filteredHotels"
           :total-items="searchStore.totalHotelsNumber"
           :items-per-page="20"
           :max-pages-shown="5"
@@ -245,6 +254,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import router from "@/router/index";
 import { useSearchStore } from "@/stores/searchStore";
+const route = useRoute();
 const budgets = ref([
   { min: 0, max: 200 },
   { min: 200, max: 500 },
@@ -258,15 +268,23 @@ const propertyInput = ref("");
 const sortOptions = ref([]);
 const sortID = ref(null);
 const sortTitle = ref("Recommended");
-const currentPage = computed(() => parseInt(useRoute().query.page) || 1);
+const _currentPage = ref(parseInt(useRoute().query.page) || 1);
+const currentPage = computed({
+  get() {
+    return _currentPage.value;
+  },
+  set(val) {
+    _currentPage.value = val;
+  },
+});
 const selectedStars = ref(5);
 const selectedBudget = ref(null);
 const isBudgetCustom = ref(false);
 const customMinBudget = ref(null);
 const customMaxBudget = ref(null);
-const originalHotels = computed(() => searchStore.searchResults.data.hotels);
+const originalHotels = computed(() => searchStore.searchResults.data?.hotels);
 const filteredHotels = computed(() =>
-  originalHotels.value.filter(
+  originalHotels.value?.filter(
     (hotel) =>
       hotel.property.name
         .toLowerCase()
@@ -274,7 +292,12 @@ const filteredHotels = computed(() =>
       hotel.property.reviewScore >= selectedStars.value
   )
 );
-
+watch(filteredHotels, () => {
+  currentPage.value = 1;
+});
+// watch([currentPage, customMinBudget, customMaxBudget, sortID], (newValue) => {
+//   console.log(newValue);
+// });
 // onMounted(async () => {
 //   console.log(searchStore);
 //   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getSortBy?dest_id=${

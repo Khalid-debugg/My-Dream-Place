@@ -24,7 +24,7 @@ export const useSearchStore = defineStore("search", () => {
     const options = {
       method: "GET",
       headers: {
-        "X-RapidAPI-Key": "1f805a8792mshce9d13a84e42ba8p1ad893jsn4a2c440cd329",
+        "X-RapidAPI-Key": "9da0ecd970msha74958fe03ed3ddp12ae71jsn23ea60f4ff3d",
 
         "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
       },
