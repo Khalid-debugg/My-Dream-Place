@@ -220,7 +220,7 @@
             ? new Date(
                 searchStore.checkInDate.getFullYear(),
                 searchStore.checkInDate.getMonth(),
-                searchStore.checkInDate.getDate() + 1,
+                searchStore.checkInDate.getDate() + 1
               )
             : new Date()
         "
@@ -432,6 +432,7 @@ import "@vuepic/vue-datepicker/dist/main.css";
 import { ref, onMounted, onUnmounted, computed, watch } from "vue";
 import { useSearchStore } from "@/stores/searchStore";
 import { storeToRefs } from "pinia";
+import router from "../router/index";
 const searchStore = useSearchStore();
 const { searchResults } = storeToRefs(searchStore);
 const dropDown = ref(false);
@@ -449,7 +450,7 @@ const getCityOptions = async () => {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "d86ce96fe4msh1ed48c85b26cdf0p1140f5jsnb671c1e0d0e3",
+      "X-RapidAPI-Key": "1f805a8792mshce9d13a84e42ba8p1ad893jsn4a2c440cd329",
       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
     },
   };
@@ -461,7 +462,7 @@ const getCityOptions = async () => {
     }
     const data = await response.json();
     cityOptions.value = computed(() =>
-      data?.data.filter((city) => city.search_type === "city"),
+      data?.data.filter((city) => city.search_type === "city")
     );
   } catch (error) {
     console.error("Error fetching city options:", error);
@@ -490,7 +491,7 @@ const searchHotels = async () => {
     setTimeout(() => (isInputValid.value = true), 1000);
     return;
   }
-  await searchStore.sendSearchRequest(searchStore.value);
+  router.push("/search/results");
 };
 </script>
 <script>

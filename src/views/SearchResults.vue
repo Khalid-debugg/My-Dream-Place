@@ -226,13 +226,15 @@
           :hotelID="hotel.property.id"
           :hotelDescription="hotel.accessibilityLabel"
         />
-        <!-- <vue-awesome-paginate
-          :total-items="50"
-          :items-per-page="5"
+        <vue-awesome-paginate
+          :total-items="searchStore.totalHotelsNumber"
+          :items-per-page="20"
           :max-pages-shown="5"
           v-model="currentPage"
-          :on-click="onClickHandler"
-        /> -->
+          :on-click="pageHandler"
+          type="link"
+          link-url="/search/results?page=[page]"
+        />
       </main>
     </div>
   </div>
@@ -240,7 +242,8 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
-import { storeToRefs } from "pinia";
+import { useRoute } from "vue-router";
+import router from "@/router/index";
 import { useSearchStore } from "@/stores/searchStore";
 const budgets = ref([
   { min: 0, max: 200 },
@@ -255,7 +258,7 @@ const propertyInput = ref("");
 const sortOptions = ref([]);
 const sortID = ref(null);
 const sortTitle = ref("Recommended");
-const pageNumber = ref(1);
+const currentPage = computed(() => parseInt(useRoute().query.page) || 1);
 const selectedStars = ref(5);
 const selectedBudget = ref(null);
 const isBudgetCustom = ref(false);
@@ -271,31 +274,34 @@ const filteredHotels = computed(() =>
       hotel.property.reviewScore >= selectedStars.value
   )
 );
-onMounted(async () => {
-  console.log(searchStore);
-  const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getSortBy?dest_id=${
-    searchStore.city.dest_id
-  }&search_type=CITY&arrival_date=${searchStore.formatDate(
-    searchStore.checkInDate
-  )}&departure_date=${searchStore.formatDate(searchStore.checkOutDate)}`;
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "d86ce96fe4msh1ed48c85b26cdf0p1140f5jsnb671c1e0d0e3",
-      "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-    },
-  };
-  console.log(url);
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    sortOptions.value = result.data;
-    console.log(result.data);
-  } catch (error) {
-    console.error(error);
-  }
-});
 
+// onMounted(async () => {
+//   console.log(searchStore);
+//   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getSortBy?dest_id=${
+//     searchStore.city.dest_id
+//   }&search_type=CITY&arrival_date=${searchStore.formatDate(
+//     searchStore.checkInDate
+//   )}&departure_date=${searchStore.formatDate(searchStore.checkOutDate)}`;
+//   const options = {
+//     method: "GET",
+//     headers: {
+//       "X-RapidAPI-Key": "d86ce96fe4msh1ed48c85b26cdf0p1140f5jsnb671c1e0d0e3",
+//       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
+//     },
+//   };
+//   console.log(url);
+//   try {
+//     const response = await fetch(url, options);
+//     const result = await response.json();
+//     sortOptions.value = result.data;
+//     console.log(result.data);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
+function pageHandler(page) {
+  router.push({ path: "/search/results", query: { page } });
+}
 const handleBudgetChange = (option) => {
   if (selectedBudget.value === option) {
     selectedBudget.value = null;

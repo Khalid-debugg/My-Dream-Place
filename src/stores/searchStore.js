@@ -16,15 +16,15 @@ export const useSearchStore = defineStore("search", () => {
       checkInDate.value
     )}&departure_date=${formatDate(checkOutDate.value)}&adults=${
       adults.value || 1
-    }&children_age=${children || 0}%2C17&room_qty=${
+    }&children_age=${children.value || 0}%2C17&room_qty=${
       rooms.value || 1
     }&page_number=${pageNumber || 1}&price_min=${minPrice || ""}&price_max=${
       maxPrice || ""
-    }&sort_by=${sortID.value || ""}&languagecode=en-us&currency_code=USD`;
+    }&sort_by=${sortID || ""}&languagecode=en-us&currency_code=USD`;
     const options = {
       method: "GET",
       headers: {
-        "X-RapidAPI-Key": "d86ce96fe4msh1ed48c85b26cdf0p1140f5jsnb671c1e0d0e3",
+        "X-RapidAPI-Key": "1f805a8792mshce9d13a84e42ba8p1ad893jsn4a2c440cd329",
 
         "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
       },
@@ -52,7 +52,7 @@ export const useSearchStore = defineStore("search", () => {
       day < 10 ? "0" + day : day
     }`;
   }
-  return [
+  return {
     searchResults,
     city,
     checkInDate,
@@ -63,5 +63,5 @@ export const useSearchStore = defineStore("search", () => {
     totalHotelsNumber,
     sendSearchRequest,
     formatDate,
-  ];
+  };
 });
