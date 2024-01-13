@@ -7,7 +7,7 @@
     <div
       class="w-[88%] max-w-[1440px] mx-auto mt-[10rem] flex flex-col md:flex-row gap-5"
     >
-      <aside class="sticky w-[295px] flex flex-col gap-5 top-0">
+      <aside class="w-[295px] flex flex-col gap-5 top-0">
         <section class="bg-[#F2F2F2] flex flex-col gap-5 p-6 rounded-md">
           <p class="font-[500]">Search by property name</p>
           <div class="flex gap-2 p-3 rounded bg-white">
@@ -282,6 +282,8 @@ const selectedBudget = ref(null);
 const isBudgetCustom = ref(false);
 const customMinBudget = ref(null);
 const customMaxBudget = ref(null);
+const minPrice = ref(null);
+const maxPrice = ref(null);
 const originalHotels = computed(() => searchStore.searchResults.data?.hotels);
 const filteredHotels = computed(() =>
   originalHotels.value?.filter(
@@ -293,11 +295,12 @@ const filteredHotels = computed(() =>
   )
 );
 watch(filteredHotels, () => {
+  if (route.query.page) return;
   currentPage.value = 1;
 });
-// watch([currentPage, customMinBudget, customMaxBudget, sortID], (newValue) => {
-//   console.log(newValue);
-// });
+watch([currentPage, minPrice, maxPrice, sortID], async (newValue) => {
+  await searchStore.sendSearchRequest(...newValue);
+});
 // onMounted(async () => {
 //   console.log(searchStore);
 //   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getSortBy?dest_id=${
@@ -308,7 +311,7 @@ watch(filteredHotels, () => {
 //   const options = {
 //     method: "GET",
 //     headers: {
-//       "X-RapidAPI-Key": "d86ce96fe4msh1ed48c85b26cdf0p1140f5jsnb671c1e0d0e3",
+//       "X-RapidAPI-Key": "9da0ecd970msha74958fe03ed3ddp12ae71jsn23ea60f4ff3d",
 //       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
 //     },
 //   };
@@ -331,8 +334,8 @@ const handleBudgetChange = (option) => {
   } else {
     selectedBudget.value = option;
   }
-  customMinBudget.value = selectedBudget.value.min;
-  customMaxBudget.value = selectedBudget.value.max;
+  minPrice.value = selectedBudget.value?.min || null;
+  maxPrice.value = selectedBudget.value?.max || null;
 };
 const updateBudget = () => {
   if (customMinBudget.value > customMaxBudget.value) {
@@ -340,10 +343,8 @@ const updateBudget = () => {
     selectedBudget.value = null;
     return;
   }
-  selectedBudget.value = {
-    min: customMinBudget.value,
-    max: customMaxBudget.value,
-  };
+  minPrice.value = customMinBudget.value;
+  maxPrice.value = customMaxBudget.value;
 };
 const rate = (stars) => {
   selectedStars.value = stars;
