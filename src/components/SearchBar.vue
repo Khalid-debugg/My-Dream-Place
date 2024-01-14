@@ -450,7 +450,7 @@ const getCityOptions = async () => {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "9da0ecd970msha74958fe03ed3ddp12ae71jsn23ea60f4ff3d",
+      'X-RapidAPI-Key': 'ebf898cd94msh6e082b9ffbb4413p10101djsnedf3fb0e93e3',
       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
     },
   };

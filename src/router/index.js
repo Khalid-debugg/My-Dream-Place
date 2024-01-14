@@ -4,7 +4,7 @@ import SearchLayout from "../layouts/SearchLayout.vue";
 import AuthLayout from "../layouts/AuthLayout.vue";
 import CheckoutLayout from "../layouts/CheckoutLayout.vue";
 import NotFound from "../layouts/NotFound.vue";
-
+import { useUserStore } from "../stores/userStore";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -18,20 +18,25 @@ const router = createRouter({
           path: "product/:id",
           component: () => import("@/views/ProductDetails.vue"),
         },
-        { path: "trips", component: () => import("@/views/MyTrips.vue") },
+        {
+          path: "trips",
+          component: () => import("@/views/MyTrips.vue"),
+          meta: { requiresAuth: true },
+        },
       ],
     },
     {
       path: "/search/results",
       component: SearchLayout,
       name: "search",
+      meta: { requiresAuth: true },
     },
     {
       path: "/auth",
       component: AuthLayout,
       children: [
         {
-          path: "",
+          path: "signup",
           component: () => import("@/views/auth/SignUp.vue"),
         },
         {

@@ -7,7 +7,7 @@
     <div
       class="w-[88%] max-w-[1440px] mx-auto mt-[10rem] flex flex-col md:flex-row gap-5"
     >
-      <aside class="w-[295px] flex flex-col gap-5 top-0">
+      <aside class="w-[295px] flex flex-col gap-5">
         <section class="bg-[#F2F2F2] flex flex-col gap-5 p-6 rounded-md">
           <p class="font-[500]">Search by property name</p>
           <div class="flex gap-2 p-3 rounded bg-white">
@@ -136,7 +136,7 @@
           </div>
         </section>
       </aside>
-      <main class="flex flex-col gap-5 w-full">
+      <main class="flex flex-col w-full">
         <div class="flex items-center justify-between">
           <h2 class="text-[24px] font-[600]">
             {{
@@ -144,7 +144,13 @@
                 ? filteredHotels[0]?.property.wishlistName
                 : "loading..."
             }}
-            : {{ searchStore.totalHotelsNumber }} search results found
+            :
+            <span v-if="filteredHotels.length > 0">{{
+              searchStore.totalHotelsNumber
+            }}</span>
+            <span v-else-if="filteredHotels.length <= 0">0</span>
+            <span v-else>{{ "...Loading" }}</span>
+            search results found
           </h2>
           <div class="p-3 rounded-md border relative w-[190px]">
             <button
@@ -220,8 +226,9 @@
             </div>
           </div>
         </div>
-        <div v-if="filteredHotels">
+        <div v-if="filteredHotels.length > 0">
           <HotelCard
+            class="my-5"
             v-for="hotel in filteredHotels"
             :key="hotel.id"
             :name="hotel.property.name"
@@ -231,6 +238,9 @@
             :hotelID="hotel.property.id"
             :hotelDescription="hotel.accessibilityLabel"
           />
+        </div>
+        <div v-else-if="filteredHotels.length <= 0" class="min-h-[50rem]">
+          No results found
         </div>
         <div v-else>Loading ...</div>
         <vue-awesome-paginate
@@ -299,6 +309,7 @@ watch(filteredHotels, () => {
   currentPage.value = 1;
 });
 watch([currentPage, minPrice, maxPrice, sortID], async (newValue) => {
+  console.log(...newValue, selectedBudget.value);
   await searchStore.sendSearchRequest(...newValue);
 });
 // onMounted(async () => {
@@ -340,9 +351,9 @@ const handleBudgetChange = (option) => {
 const updateBudget = () => {
   if (customMinBudget.value > customMaxBudget.value) {
     alert("Please enter a valid budget");
-    selectedBudget.value = null;
     return;
   }
+  selectedBudget.value = null;
   minPrice.value = customMinBudget.value;
   maxPrice.value = customMaxBudget.value;
 };

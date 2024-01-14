@@ -9,7 +9,7 @@ export const useSearchStore = defineStore("search", () => {
   const children = ref(null);
   const rooms = ref(null);
   const totalHotelsNumber = ref(null);
-  async function sendSearchRequest(minPrice, maxPrice, sortID, pageNumber) {
+  async function sendSearchRequest(pageNumber, minPrice, maxPrice, sortID) {
     const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=${
       city.value.dest_id
     }&search_type=CITY&arrival_date=${formatDate(
@@ -24,7 +24,7 @@ export const useSearchStore = defineStore("search", () => {
     const options = {
       method: "GET",
       headers: {
-        "X-RapidAPI-Key": "9da0ecd970msha74958fe03ed3ddp12ae71jsn23ea60f4ff3d",
+        "X-RapidAPI-Key": "ebf898cd94msh6e082b9ffbb4413p10101djsnedf3fb0e93e3",
 
         "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
       },
@@ -35,10 +35,11 @@ export const useSearchStore = defineStore("search", () => {
       const response = await fetch(url, options);
       const result = await response.json();
       searchResults.value = result;
-      totalHotelsNumber.value = parseInt(
-        result.data.meta[0].title.split(" ")[0]
-      );
+      totalHotelsNumber.value =
+        parseInt(result.data.meta[0]?.title.split(" ")[0]) ||
+        totalHotelsNumber.value;
       console.log(this.searchResults);
+      console.log(response.status);
     } catch (error) {
       console.error(error);
       alert("Please enter valid data");
