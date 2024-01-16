@@ -15,12 +15,11 @@ app.use(pinia);
 app.use(VueAwesomePaginate);
 app.use(router);
 
-const userStore = useUserStore();
-
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
 
   if (to.meta.requiresAuth && !userStore.isAuthenticated) {
+    userStore.redirectedPath = to.fullPath;
     next("/auth/login");
   } else {
     next();

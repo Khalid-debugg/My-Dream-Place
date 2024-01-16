@@ -144,7 +144,7 @@ function handleSubmit() {
     confirmPasswordError.value = "Passwords does not match";
     return;
   }
-  console.log("Form submitted successfully");
+  userStore.logIn(emailInput.value, passwordInput.value);
 }
 </script>
 

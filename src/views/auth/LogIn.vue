@@ -57,15 +57,7 @@
       </div>
       <div class="text-red-500">{{ passwordError }}</div>
     </div>
-    <div>
-      <input
-        type="checkbox"
-        id="keepMe"
-        name="checkbox"
-        v-model="keepMeLoggedIn"
-      />
-      <label for="keepMe"> Keep me logged in</label>
-    </div>
+
     <button class="text-center bg-[#2F80ED] rounded-md text-white p-2">
       Sign in
     </button>
@@ -77,13 +69,15 @@
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia";
 import { ref } from "vue";
+import { useUserStore } from "../../stores/userStore";
+const userStore = useUserStore();
 const visiblePassword = ref(false);
 const emailInput = ref("");
 const passwordInput = ref("");
 const emailError = ref(null);
 const passwordError = ref(null);
-const keepMeLoggedIn = ref(false);
 function handleSubmit() {
   emailError.value = null;
   passwordError.value = null;
@@ -101,8 +95,7 @@ function handleSubmit() {
       "Password must have at least 8 characters, 1 special character, 1 uppercase letter, and 1 number";
     return;
   }
-
-  console.log("Form submitted successfully");
+  userStore.logIn(emailInput.value, passwordInput.value);
 }
 </script>
 
