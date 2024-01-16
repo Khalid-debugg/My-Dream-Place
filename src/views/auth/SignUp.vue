@@ -1,22 +1,26 @@
 <template>
   <form
     class="flex flex-col max-w-[401px] mx-auto gap-8 mt-[3rem]"
+    novalidate
     @submit.prevent="handleSubmit"
   >
     <h1 class="text-center font-[600] text-[28px]">Register</h1>
     <div>
       <label for="Email" class="font-[500] block">Email address</label>
       <input
+        v-model="emailInput"
         type="email"
         name=""
         id="Email"
         class="bg-[#F2F2F2] py-2 px-4 w-full"
       />
+      <div class="text-red-500">{{ emailError }}</div>
     </div>
     <div>
       <label for="password" class="font-[500] block"> Password</label>
       <div class="relative">
         <input
+          v-model="passwordInput"
           :type="visiblePassword ? 'text' : 'password'"
           name=""
           id="password"
@@ -50,6 +54,7 @@
             />
           </svg>
         </button>
+        <div class="text-red-500">{{ passwordError }}</div>
       </div>
     </div>
     <div>
@@ -58,6 +63,7 @@
       >
       <div class="relative">
         <input
+          v-model="confirmPasswordInput"
           :type="visibleConfirmPassword ? 'text' : 'password'"
           name=""
           id="ConfirmPassword"
@@ -91,6 +97,7 @@
             />
           </svg>
         </button>
+        <div class="text-red-500">{{ confirmPasswordError }}</div>
       </div>
     </div>
     <button
@@ -100,8 +107,8 @@
       Submit
     </button>
     <div class="text-center">
-      Don't have an account?
-      <a href="/auth/signup" class="text-[#2F80ED]">Sign in</a>
+      Already have an account?
+      <a href="/auth/login" class="text-[#2F80ED]">Sign in</a>
     </div>
   </form>
 </template>
@@ -110,7 +117,35 @@
 import { ref } from "vue";
 const visiblePassword = ref(false);
 const visibleConfirmPassword = ref(false);
-function handleSubmit() {}
+const emailInput = ref("");
+const passwordInput = ref("");
+const confirmPasswordInput = ref("");
+const emailError = ref(null);
+const passwordError = ref(null);
+const confirmPasswordError = ref(null);
+function handleSubmit() {
+  emailError.value = null;
+  passwordError.value = null;
+  confirmPasswordError.value = null;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(emailInput.value)) {
+    emailError.value = "Invalid email address";
+    return;
+  }
+
+  const passwordRegex =
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (!passwordRegex.test(passwordInput.value)) {
+    passwordError.value =
+      "Password must have at least 8 characters, 1 special character, 1 uppercase letter, and 1 number";
+    return;
+  }
+  if (confirmPasswordInput.value !== passwordInput.value) {
+    confirmPasswordError.value = "Passwords does not match";
+    return;
+  }
+  console.log("Form submitted successfully");
+}
 </script>
 
 <style lang="scss" scoped></style>
