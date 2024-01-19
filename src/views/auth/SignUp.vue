@@ -115,6 +115,8 @@
 
 <script setup>
 import { ref } from "vue";
+import { useUserStore } from "../../stores/userStore";
+const userStore = useUserStore();
 const visiblePassword = ref(false);
 const visibleConfirmPassword = ref(false);
 const emailInput = ref("");

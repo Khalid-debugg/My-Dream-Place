@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import config from "../../config";
 import { ref } from "vue";
 export const useSearchStore = defineStore("search", () => {
   const searchResults = ref([]);
@@ -24,22 +25,20 @@ export const useSearchStore = defineStore("search", () => {
     const options = {
       method: "GET",
       headers: {
-        "X-RapidAPI-Key": "dc7c8de46fmsh6251dc52ed59ad3p113b6ajsn5e97ca5e8345",
+        "X-RapidAPI-Key": config.apiKey,
 
         "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
       },
     };
-
+    console.log(url);
     try {
-      console.log(url);
       const response = await fetch(url, options);
       const result = await response.json();
+      console.log(result);
       searchResults.value = result;
       totalHotelsNumber.value =
         parseInt(result.data.meta[0]?.title.split(" ")[0]) ||
         totalHotelsNumber.value;
-      console.log(this.searchResults);
-      console.log(response.status);
     } catch (error) {
       console.error(error);
       alert("Please enter valid data");

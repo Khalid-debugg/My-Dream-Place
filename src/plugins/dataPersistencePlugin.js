@@ -34,7 +34,6 @@ export default function dataPersistence(context) {
   context.store.$state = initialState;
   context.store.$subscribe((mutation, state) => {
     const serializedValue = JSON.stringify(state);
-    console.log(serializedValue);
     window.sessionStorage.setItem(storeKey, serializedValue);
   });
 }

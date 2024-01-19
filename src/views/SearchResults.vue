@@ -139,23 +139,17 @@
       <main class="flex flex-col w-full">
         <div class="flex items-center justify-between">
           <h2 class="text-[24px] font-[600]">
-            {{
-              filteredHotels
-                ? filteredHotels[0]?.property.wishlistName
-                : "loading..."
-            }}
+            {{ filteredHotels ? filteredHotels[0]?.property.wishlistName : "" }}
             :
             <span v-if="filteredHotels?.length > 0">{{
               searchStore.totalHotelsNumber
             }}</span>
-            <span v-else-if="filteredHotels?.length <= 0">0</span>
-            <span v-else>{{ "...Loading" }}</span>
+            <span v-else>0</span>
             search results found
           </h2>
-          <div class="p-3 rounded-md border relative w-[190px]">
-            <button
-              class="flex justify-between items-center w-full"
-              @click="dropDown = !dropDown"
+          <Menu as="div" class="relative inline-block text-left rounded-lg">
+            <MenuButton
+              class="flex items-center w-full justify-center gap-x-5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
               <div class="flex flex-col gap-[0.3rem] items-start text-left">
                 <p class="font-[500] text-[12px] text-[#918f8f]">Sort by</p>
@@ -164,7 +158,6 @@
                 </p>
               </div>
               <svg
-                v-if="!dropDown"
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -180,51 +173,40 @@
                   stroke-linejoin="round"
                 />
               </svg>
-              <svg
-                v-else
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-              >
-                <path
-                  d="M2.72027 10.0334L7.06694 5.68678C7.58027 5.17345 8.42027 5.17345 8.93361 5.68678L13.2803 10.0334"
-                  stroke="#828282"
-                  stroke-width="2"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
-            <div
-              class="flex flex-col items-start absolute bg-white left-0 top-20 w-full rounded-md h-0 overflow-hidden translate-y-[-20px] transition-all duration-300 ease-in-out"
-              :class="{ slide: dropDown }"
+            </MenuButton>
+
+            <transition
+              enter-active-class="transition ease-out duration-100"
+              enter-from-class="transform opacity-0 scale-95"
+              enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75"
+              leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95"
             >
-              <button
-                @click="
-                  sortID = 'recommended';
-                  sortTitle = 'Recommended';
-                "
-                class="border-b w-full p-2 text-left"
+              <MenuItems
+                class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
-                Recommended
-              </button>
-              <button
-                v-for="(sortOption, index) in sortOptions"
-                :key="sortOption.id"
-                @click="
-                  sortID = sortOption.id;
-                  sortTitle = sortOption.title;
-                "
-                class="text-left w-full p-2"
-                :class="{ 'border-b-2': index < sortOptions.length - 1 }"
-              >
-                {{ sortOption.title }}
-              </button>
-            </div>
-          </div>
+                <MenuItem
+                  v-for="sortOption in sortOptions"
+                  :key="sortOption.name"
+                  v-slot="{ active }"
+                >
+                  <button
+                    @click="
+                      sortID = sortOption.id;
+                      sortTitle = sortOption.title;
+                    "
+                    :class="[
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 w-full  text-left',
+                    ]"
+                  >
+                    {{ sortOption.title }}
+                  </button>
+                </MenuItem>
+              </MenuItems>
+            </transition>
+          </Menu>
         </div>
         <div v-if="filteredHotels?.length > 0">
           <HotelCard
@@ -239,10 +221,8 @@
             :hotelDescription="hotel.accessibilityLabel"
           />
         </div>
-        <div v-else-if="filteredHotels?.length <= 0" class="min-h-[50rem]">
-          No results found
-        </div>
-        <div v-else>Loading ...</div>
+
+        <div v-else>No results found</div>
         <vue-awesome-paginate
           class="my-5"
           v-if="filteredHotels"
@@ -260,6 +240,7 @@
 </template>
 
 <script setup>
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import router from "@/router/index";
@@ -275,7 +256,17 @@ const budgets = ref([
 const searchStore = useSearchStore();
 const dropDown = ref(false);
 const propertyInput = ref("");
-const sortOptions = ref([]);
+const sortOptions = ref([
+  { id: "recommended", title: "Recommended" },
+  { id: "upsort_bh", title: "Entire homes & apartments first" },
+  { id: "popularity", title: "Popularity" },
+  { id: "distance", title: "Distance from city centre" },
+  { id: "closest_beach_distance", title: "Distance from closest beach" },
+  { id: "class_descending", title: "Star rating (highest first)" },
+  { id: "class_ascending", title: "Star rating (lowest first)" },
+  { id: "bayesian_review_score", title: "Best reviewed first" },
+  { id: "price", title: "Price (lowest first)" },
+]);
 const sortID = ref(null);
 const sortTitle = ref("Recommended");
 const _currentPage = ref(parseInt(useRoute().query.page) || 1);
@@ -309,33 +300,9 @@ watch(filteredHotels, () => {
   currentPage.value = 1;
 });
 watch([currentPage, minPrice, maxPrice, sortID], async (newValue) => {
-  console.log(...newValue, selectedBudget.value);
   await searchStore.sendSearchRequest(...newValue);
 });
-// onMounted(async () => {
-//   console.log(searchStore);
-//   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getSortBy?dest_id=${
-//     searchStore.city.dest_id
-//   }&search_type=CITY&arrival_date=${searchStore.formatDate(
-//     searchStore.checkInDate
-//   )}&departure_date=${searchStore.formatDate(searchStore.checkOutDate)}`;
-//   const options = {
-//     method: "GET",
-//     headers: {
-//       "X-RapidAPI-Key": "9da0ecd970msha74958fe03ed3ddp12ae71jsn23ea60f4ff3d",
-//       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-//     },
-//   };
-//   console.log(url);
-//   try {
-//     const response = await fetch(url, options);
-//     const result = await response.json();
-//     sortOptions.value = result.data;
-//     console.log(result.data);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// });
+
 function pageHandler(page) {
   router.push({ path: "/search/results", query: { page } });
 }
