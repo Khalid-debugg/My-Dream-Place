@@ -2,7 +2,91 @@
   <div
     class="flex flex-wrap justify-center items-center gap-2 text-[13px] bg-white max-w-[1030px] min-w-[170px] w-[85%] mx-auto font-workSans shadow-lg p-3 rounded-lg relative"
   >
-    <div
+    <Menu as="div" class="relative inline-block text-left w-[230px] rounded-lg">
+      <MenuButton
+        :class="[
+          { selected: searchStore.city, 'blue-flash': !isInputValid },
+          'flex w-full items-center justify-between rounded-md px-3 py-2 text-gray-900 shadow-sm hover:bg-gray-50 h-[43px]',
+        ]"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+        >
+          <path
+            d="M9.9999 11.1917C10.3413 11.1917 10.6794 11.1244 10.9949 10.9938C11.3103 10.8631 11.5969 10.6716 11.8384 10.4302C12.0798 10.1887 12.2713 9.90212 12.402 9.58668C12.5327 9.27123 12.5999 8.93314 12.5999 8.5917C12.5999 8.25026 12.5327 7.91217 12.402 7.59672C12.2713 7.28128 12.0798 6.99465 11.8384 6.75322C11.5969 6.51179 11.3103 6.32027 10.9949 6.18961C10.6794 6.05895 10.3413 5.9917 9.9999 5.9917C9.31034 5.9917 8.64902 6.26563 8.16142 6.75322C7.67383 7.24082 7.3999 7.90214 7.3999 8.5917C7.3999 9.28126 7.67383 9.94258 8.16142 10.4302C8.64902 10.9178 9.31034 11.1917 9.9999 11.1917V11.1917Z"
+            :stroke="searchStore.city ? '#2f80ed' : '#828282'"
+            stroke-width="1.5"
+          />
+          <path
+            d="M3.01675 7.07508C4.65842 -0.141583 15.3501 -0.13325 16.9834 7.08342C17.9417 11.3168 15.3084 14.9001 13.0001 17.1168C12.1935 17.8947 11.1165 18.3294 9.99592 18.3294C8.87529 18.3294 7.79835 17.8947 6.99175 17.1168C4.69175 14.9001 2.05842 11.3084 3.01675 7.07508V7.07508Z"
+            :stroke="searchStore.city ? '#2f80ed' : '#828282'"
+            stroke-width="1.5"
+          />
+        </svg>
+        <p>
+          {{
+            searchStore.city ? searchStore.city.name : "Where are you going ?"
+          }}
+        </p>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+        >
+          <path
+            d="M13.2797 5.96655L8.93306 10.3132C8.41973 10.8266 7.57973 10.8266 7.06639 10.3132L2.71973 5.96655"
+            :stroke="searchStore.city ? '#2f80ed' : '#828282'"
+            stroke-width="2"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </MenuButton>
+
+      <transition
+        enter-active-class="transition ease-out duration-100"
+        enter-from-class="transform opacity-0 scale-95"
+        enter-to-class="transform opacity-100 scale-100"
+        leave-active-class="transition ease-in duration-75"
+        leave-from-class="transform opacity-100 scale-100"
+        leave-to-class="transform opacity-0 scale-95"
+      >
+        <MenuItems
+          class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        >
+          <input
+            type="text"
+            v-model="cityInput"
+            class="text-center border p-2 w-full"
+            @input="getCityOptions"
+          />
+          <MenuItem
+            v-for="(cityOption, index) in cityOptions.value"
+            :key="cityOption.name"
+            v-slot="{ active }"
+          >
+            <button
+              href="#"
+              @click="searchStore.city = cityOption"
+              :class="[
+                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                'block px-4 py-2 text-center w-full',
+              ]"
+            >
+              {{ cityOption.name }}, {{ cityOption.country }}
+            </button>
+          </MenuItem>
+        </MenuItems>
+      </transition>
+    </Menu>
+    <!-- <div
       class="relative rounded-lg bg-Gray w-[230px]"
       :class="{ selected: isCitySelected, 'blue-flash': !isInputValid }"
     >
@@ -96,14 +180,13 @@
           {{ cityOption.name }}, {{ cityOption.country }}
         </button>
       </div>
-    </div>
+    </div> -->
     <div
       class="flex gap-2 items-center p-4 rounded-lg bg-Gray max-w-[147px] max-h-[43px]"
-      @mousedown="
-        isCheckInSelected = true;
-        dropDown = false;
-      "
-      :class="{ selected: isCheckInSelected, 'blue-flash': !isInputValid }"
+      :class="{
+        selected: searchStore.checkInDate,
+        'blue-flash': !isInputValid,
+      }"
     >
       <VueDatePicker
         v-model="searchStore.checkInDate"
@@ -124,7 +207,7 @@
           >
             <path
               d="M5.6665 1.66675V4.16675"
-              :stroke="isCheckInSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkInDate ? '#2f80ed' : '#828282'"
               stroke-width="1.5"
               stroke-miterlimit="10"
               stroke-linecap="round"
@@ -132,7 +215,7 @@
             />
             <path
               d="M12.3335 1.66675V4.16675"
-              :stroke="isCheckInSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkInDate ? '#2f80ed' : '#828282'"
               stroke-width="1.5"
               stroke-miterlimit="10"
               stroke-linecap="round"
@@ -140,7 +223,7 @@
             />
             <path
               d="M1.9165 7.5752H16.0832"
-              :stroke="isCheckInSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkInDate ? '#2f80ed' : '#828282'"
               stroke-width="1.5"
               stroke-miterlimit="10"
               stroke-linecap="round"
@@ -148,7 +231,7 @@
             />
             <path
               d="M16.5 7.08341V14.1667C16.5 16.6667 15.25 18.3334 12.3333 18.3334H5.66667C2.75 18.3334 1.5 16.6667 1.5 14.1667V7.08341C1.5 4.58341 2.75 2.91675 5.66667 2.91675H12.3333C15.25 2.91675 16.5 4.58341 16.5 7.08341Z"
-              :stroke="isCheckInSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkInDate ? '#2f80ed' : '#828282'"
               stroke-width="1.5"
               stroke-miterlimit="10"
               stroke-linecap="round"
@@ -156,42 +239,42 @@
             />
             <path
               d="M12.0791 11.4167H12.0866"
-              :stroke="isCheckInSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkInDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M12.0791 13.9167H12.0866"
-              :stroke="isCheckInSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkInDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M8.99561 11.4167H9.00394"
-              :stroke="isCheckInSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkInDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M8.99561 13.9167H9.00394"
-              :stroke="isCheckInSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkInDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M5.91162 11.4167H5.91995"
-              :stroke="isCheckInSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkInDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M5.91162 13.9167H5.91995"
-              :stroke="isCheckInSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkInDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -202,12 +285,11 @@
       ></VueDatePicker>
     </div>
     <button
-      class="flex gap-2 items-center p-4 rounded-lg bg-Gray max-w-[155px] max-h-[43px]"
-      @mousedown="
-        isCheckOutSelected = true;
-        dropDown = false;
-      "
-      :class="{ selected: isCheckOutSelected, 'blue-flash': !isInputValid }"
+      class="flex gap-2 items-center p-4 rounded-lg bg-Gray max-w-[147px] max-h-[43px]"
+      :class="{
+        selected: searchStore.checkOutDate,
+        'blue-flash': !isInputValid,
+      }"
     >
       <VueDatePicker
         class=""
@@ -237,7 +319,7 @@
           >
             <path
               d="M5.6665 1.66675V4.16675"
-              :stroke="isCheckOutSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkOutDate ? '#2f80ed' : '#828282'"
               stroke-width="1.5"
               stroke-miterlimit="10"
               stroke-linecap="round"
@@ -245,7 +327,7 @@
             />
             <path
               d="M12.3335 1.66675V4.16675"
-              :stroke="isCheckOutSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkOutDate ? '#2f80ed' : '#828282'"
               stroke-width="1.5"
               stroke-miterlimit="10"
               stroke-linecap="round"
@@ -253,7 +335,7 @@
             />
             <path
               d="M1.9165 7.5752H16.0832"
-              :stroke="isCheckOutSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkOutDate ? '#2f80ed' : '#828282'"
               stroke-width="1.5"
               stroke-miterlimit="10"
               stroke-linecap="round"
@@ -261,7 +343,7 @@
             />
             <path
               d="M16.5 7.08341V14.1667C16.5 16.6667 15.25 18.3334 12.3333 18.3334H5.66667C2.75 18.3334 1.5 16.6667 1.5 14.1667V7.08341C1.5 4.58341 2.75 2.91675 5.66667 2.91675H12.3333C15.25 2.91675 16.5 4.58341 16.5 7.08341Z"
-              :stroke="isCheckOutSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkOutDate ? '#2f80ed' : '#828282'"
               stroke-width="1.5"
               stroke-miterlimit="10"
               stroke-linecap="round"
@@ -269,42 +351,42 @@
             />
             <path
               d="M12.0791 11.4167H12.0866"
-              :stroke="isCheckOutSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkOutDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M12.0791 13.9167H12.0866"
-              :stroke="isCheckOutSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkOutDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M8.99561 11.4167H9.00394"
-              :stroke="isCheckOutSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkOutDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M8.99561 13.9167H9.00394"
-              :stroke="isCheckOutSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkOutDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M5.91162 11.4167H5.91995"
-              :stroke="isCheckOutSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkOutDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M5.91162 13.9167H5.91995"
-              :stroke="isCheckOutSelected ? '#2f80ed' : '#828282'"
+              :stroke="searchStore.checkOutDate ? '#2f80ed' : '#828282'"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -426,6 +508,7 @@
 </template>
 
 <script setup>
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { useRoute } from "vue-router";
@@ -436,9 +519,6 @@ import router from "../router/index";
 const searchStore = useSearchStore();
 const { searchResults } = storeToRefs(searchStore);
 const dropDown = ref(false);
-const isCitySelected = ref(searchStore.city);
-const isCheckInSelected = ref(searchStore.checkInDate);
-const isCheckOutSelected = ref(searchStore.checkOutDate);
 const isGuestsSelected = ref(searchStore.adults);
 const isRoomsSelected = ref(searchStore.rooms);
 const isInputValid = ref(true);
@@ -450,7 +530,7 @@ const getCityOptions = async () => {
   const options = {
     method: "GET",
     headers: {
-      'X-RapidAPI-Key': 'ebf898cd94msh6e082b9ffbb4413p10101djsnedf3fb0e93e3',
+      "X-RapidAPI-Key": "dc7c8de46fmsh6251dc52ed59ad3p113b6ajsn5e97ca5e8345",
       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
     },
   };

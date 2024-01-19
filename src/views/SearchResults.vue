@@ -145,10 +145,10 @@
                 : "loading..."
             }}
             :
-            <span v-if="filteredHotels.length > 0">{{
+            <span v-if="filteredHotels?.length > 0">{{
               searchStore.totalHotelsNumber
             }}</span>
-            <span v-else-if="filteredHotels.length <= 0">0</span>
+            <span v-else-if="filteredHotels?.length <= 0">0</span>
             <span v-else>{{ "...Loading" }}</span>
             search results found
           </h2>
@@ -226,7 +226,7 @@
             </div>
           </div>
         </div>
-        <div v-if="filteredHotels.length > 0">
+        <div v-if="filteredHotels?.length > 0">
           <HotelCard
             class="my-5"
             v-for="hotel in filteredHotels"
@@ -239,7 +239,7 @@
             :hotelDescription="hotel.accessibilityLabel"
           />
         </div>
-        <div v-else-if="filteredHotels.length <= 0" class="min-h-[50rem]">
+        <div v-else-if="filteredHotels?.length <= 0" class="min-h-[50rem]">
           No results found
         </div>
         <div v-else>Loading ...</div>
