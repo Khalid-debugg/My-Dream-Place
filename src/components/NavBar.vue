@@ -118,15 +118,206 @@
           stroke-width="2"
         />
       </svg>
+      <Menu as="div" class="relative inline-block text-left rounded-lg">
+        <MenuButton
+          class="flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm"
+        >
+          <img src="../assets/images/Profile.png" alt="" />
+        </MenuButton>
 
-      <img src="../assets/images/Profile.png" alt="" />
+        <transition
+          enter-active-class="transition ease-out duration-100"
+          enter-from-class="transform opacity-0 scale-95"
+          enter-to-class="transform opacity-100 scale-100"
+          leave-active-class="transition ease-in duration-75"
+          leave-from-class="transform opacity-100 scale-100"
+          leave-to-class="transform opacity-0 scale-95"
+        >
+          <MenuItems
+            class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          >
+            <MenuItem v-slot="{ active }">
+              <button
+                :class="[
+                  active
+                    ? 'bg-gray-100 rounded-md text-gray-900'
+                    : 'text-gray-700',
+                  'block px-4 py-2 w-full text-left flex items-center gap-2',
+                ]"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clip-path="url(#clip0_1_2182)">
+                    <path
+                      d="M15.1171 18.0168C14.3838 18.2335 13.5171 18.3335 12.5005 18.3335H7.50046C6.48379 18.3335 5.61712 18.2335 4.88379 18.0168C5.06712 15.8502 7.29212 14.1418 10.0005 14.1418C12.7088 14.1418 14.9338 15.8502 15.1171 18.0168V18.0168Z"
+                      stroke="#4F4F4F"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12.5003 1.66675H7.50033C3.33366 1.66675 1.66699 3.33341 1.66699 7.50008V12.5001C1.66699 15.6501 2.61699 17.3751 4.88366 18.0167C5.06699 15.8501 7.29199 14.1417 10.0003 14.1417C12.7087 14.1417 14.9337 15.8501 15.117 18.0167C17.3837 17.3751 18.3337 15.6501 18.3337 12.5001V7.50008C18.3337 3.33341 16.667 1.66675 12.5003 1.66675ZM10.0003 11.8084C8.35033 11.8084 7.01699 10.4667 7.01699 8.81675C7.01699 7.16675 8.35033 5.83341 10.0003 5.83341C11.6503 5.83341 12.9837 7.16675 12.9837 8.81675C12.9837 10.4667 11.6503 11.8084 10.0003 11.8084Z"
+                      stroke="#4F4F4F"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12.9833 8.81683C12.9833 10.4668 11.6499 11.8085 9.99993 11.8085C8.34993 11.8085 7.0166 10.4668 7.0166 8.81683C7.0166 7.16683 8.34993 5.8335 9.99993 5.8335C11.6499 5.8335 12.9833 7.16683 12.9833 8.81683Z"
+                      stroke="#4F4F4F"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1_2182">
+                      <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+
+                <p>Manage account</p>
+              </button>
+            </MenuItem>
+            <MenuItem v-slot="{ active }">
+              <button
+                @click="router.push('/trips')"
+                :class="[
+                  active
+                    ? 'bg-gray-100 rounded-md text-gray-900'
+                    : 'text-gray-700',
+                  'block px-4 py-2 w-full text-left flex items-center gap-2',
+                ]"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M2.50033 15H17.5003V16.6667H2.50033V15ZM17.9245 7.10583C17.8121 6.76825 17.5702 6.48913 17.252 6.32988C16.9338 6.17064 16.5654 6.1443 16.2278 6.25667L12.5003 7.5L5.83366 5L4.16699 5.83333L9.16699 9.16667L5.83366 10.8333L2.50033 9.16667L1.66699 10L5.00033 13.3333L17.1228 8.7875C17.4481 8.66539 17.7133 8.42196 17.8628 8.10835C18.0123 7.79475 18.0344 7.4354 17.9245 7.10583Z"
+                    fill="#4F4F4F"
+                  />
+                </svg>
+
+                <p>My trips</p>
+              </button>
+            </MenuItem>
+            <MenuItem v-slot="{ active }">
+              <button
+                :class="[
+                  active
+                    ? 'bg-gray-100 rounded-md text-gray-900'
+                    : 'text-gray-700',
+                  'block px-4 py-2 w-full text-left flex items-center gap-2',
+                ]"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10.834 9.29175H5.83398"
+                    stroke="#4F4F4F"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M1.66699 9.2917V5.4417C1.66699 3.7417 3.04199 2.3667 4.74199 2.3667H9.42533C11.1253 2.3667 12.5003 3.42503 12.5003 5.12503"
+                    stroke="#4F4F4F"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M14.567 10.1667C14.1503 10.5667 13.9503 11.1833 14.117 11.8167C14.3253 12.5917 15.092 13.0833 15.892 13.0833H16.667V14.2917C16.667 16.1333 15.1753 17.625 13.3337 17.625H5.00033C3.15866 17.625 1.66699 16.1333 1.66699 14.2917V8.45833C1.66699 6.61667 3.15866 5.125 5.00033 5.125H13.3337C15.167 5.125 16.667 6.625 16.667 8.45833V9.66667H15.767C15.3003 9.66667 14.8753 9.85 14.567 10.1667V10.1667Z"
+                    stroke="#4F4F4F"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M18.3338 10.5167V12.2334C18.3338 12.7001 17.9505 13.0834 17.4755 13.0834H15.8672C14.9672 13.0834 14.1422 12.4251 14.0672 11.5251C14.0172 11.0001 14.2172 10.5084 14.5672 10.1667C14.8755 9.85008 15.3005 9.66675 15.7672 9.66675H17.4755C17.9505 9.66675 18.3338 10.0501 18.3338 10.5167V10.5167Z"
+                    stroke="#4F4F4F"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <p>Reward and wallet</p>
+              </button>
+            </MenuItem>
+            <MenuItem v-slot="{ active }">
+              <button
+                @click="
+                  userStore.logOut();
+                  router.push('/');
+                "
+                :class="[
+                  active
+                    ? 'bg-gray-100 rounded-md text-gray-900'
+                    : 'text-gray-700',
+                  'block px-4 py-2 w-full text-left flex items-center gap-2',
+                ]"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12.584 13.7C12.3257 16.7 10.784 17.925 7.40898 17.925L7.30065 17.925C3.57565 17.925 2.08398 16.4334 2.08398 12.7084L2.08399 7.27505C2.08399 3.55005 3.57565 2.05838 7.30065 2.05838L7.40899 2.05838C10.759 2.05838 12.3007 3.26672 12.5757 6.21672"
+                    stroke="#4F4F4F"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M7.50006 10L16.9834 10"
+                    stroke="#4F4F4F"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M15.1253 12.7917L17.917 10.0001L15.1253 7.20841"
+                    stroke="#4F4F4F"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <p>Sign out</p>
+              </button>
+            </MenuItem>
+          </MenuItems>
+        </transition>
+      </Menu>
     </div>
   </nav>
 </template>
 
 <script setup>
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { useUserStore } from "../stores/userStore";
 import router from "../router";
+import { ref } from "vue";
 const props = defineProps(["layout"]);
 const userStore = useUserStore();
 </script>
