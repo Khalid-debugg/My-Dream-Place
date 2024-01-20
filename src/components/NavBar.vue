@@ -66,7 +66,7 @@
     >
       Login
     </button>
-    <div v-else class="flex items-center gap-3">
+    <div v-else class="flex items-center">
       <svg
         v-if="props.layout === 'Search'"
         width="24"
@@ -120,7 +120,7 @@
       </svg>
       <Menu as="div" class="relative inline-block text-left rounded-lg">
         <MenuButton
-          class="flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm"
+          class="flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-900"
         >
           <img src="../assets/images/Profile.png" alt="" />
         </MenuButton>

@@ -6,6 +6,7 @@ export const useUserStore = defineStore("user", () => {
   const password = ref(null);
   const isAuthenticated = ref(false);
   const redirectedPath = ref(null);
+  const showModal = ref(false);
   function logIn(e, p) {
     email.value = e;
     password.value = p;
@@ -17,5 +18,13 @@ export const useUserStore = defineStore("user", () => {
     password.value = null;
     isAuthenticated.value = false;
   }
-  return { email, password, isAuthenticated, redirectedPath, logIn, logOut };
+  return {
+    email,
+    password,
+    isAuthenticated,
+    redirectedPath,
+    showModal,
+    logIn,
+    logOut,
+  };
 });

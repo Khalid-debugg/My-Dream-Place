@@ -2,6 +2,7 @@
   <main
     class="w-[88%] max-w-[1240px] mx-auto font-sfNormal flex flex-col gap-10"
   >
+    <WelcomeModal v-if="userStore.showModal" />
     <div class="relative text-center overflow-hidden">
       <img
         loading="lazy"
@@ -124,16 +125,18 @@
 </template>
 
 <script setup>
+const userStore = useUserStore();
 </script>
 <script>
+import { useUserStore } from "../stores/userStore";
 import SearchBar from "../components/SearchBar.vue";
 import Restriction from "../components/Restriction.vue";
 import Card from "../components/Card.vue";
 import LayeredCard from "../components/LayeredCard.vue";
+import WelcomeModal from "../components/WelcomeModal.vue";
 export default {
-  components: { SearchBar, Restriction, Card, LayeredCard },
+  components: { SearchBar, Restriction, Card, LayeredCard, WelcomeModal },
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

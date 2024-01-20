@@ -17,7 +17,9 @@ app.use(router);
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
-
+  if (from.fullPath === "/auth/login" || from.fullPath === "/auth/signup") {
+    userStore.showModal = true;
+  }
   if (to.meta.requiresAuth && !userStore.isAuthenticated) {
     userStore.redirectedPath = to.fullPath;
     next("/auth/login");
