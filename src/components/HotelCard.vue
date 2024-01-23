@@ -78,6 +78,15 @@
         </div>
         <div class="flex justify-between items-center flex-wrap">
           <button
+            @click="
+              router.push({
+                path: `/hotel/${props.hotelID}`,
+                query: {
+                  reviewScore: props.reviewScore,
+                  reviewCount: props.reviewCount,
+                },
+              })
+            "
             class="bg-Blue text-white text-[14px] font-[500] rounded-md inline-flex px-[18px] py-[10px] max-h-[40px] items-center"
           >
             See availability
@@ -102,6 +111,7 @@
 </template>
 
 <script setup>
+import router from "../router";
 import { computed, onMounted, ref } from "vue";
 import { useSearchStore } from "../stores/searchStore";
 const strikeThroughAmount = ref(0);
@@ -157,5 +167,4 @@ const hotelDescriptionLoading = ref(true);
 // });
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
