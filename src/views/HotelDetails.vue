@@ -24,7 +24,7 @@
 
   <main class="bg-Gray">
     <div
-      class="w-[88%] mx-auto max-w-[1440px] py-8 flex flex-wrap justify-between"
+      class="w-[88%] mx-auto max-w-[1440px] py-6 flex flex-wrap justify-between"
     >
       <div class="xl:w-[65%] flex flex-col gap-8 my-4">
         <div class="flex flex-col gap-3">
@@ -111,7 +111,7 @@
           <div class="border-b-2"></div>
           <div class="flex flex-col gap-5 p-8">
             <h2 class="font-[500] text-[18px]">Top facilities</h2>
-            <div class="flex flex-col flex-wrap h-[7.5rem] w-[30rem] gap-5">
+            <div class="flex flex-col flex-wrap h-[7.5rem] sm:w-[30rem] gap-5">
               <div
                 v-for="benefit in hotelBenefits"
                 :key="hotelBenefits.icon"
@@ -121,7 +121,7 @@
                   :src="`../src/assets/images/icons/${benefit.icon}.svg`"
                   alt=""
                 />
-                {{ benefit.translated_name }}
+                <p>{{ benefit.translated_name }}</p>
               </div>
             </div>
           </div>
@@ -129,7 +129,7 @@
       </div>
       <div class="flex flex-col gap-8">
         <iframe
-          class="rounded-md"
+          class="rounded-md w-[300px] sm:w-[400px]"
           width="400"
           height="240"
           frameborder="0"
@@ -170,6 +170,50 @@
         </div>
       </div>
     </div>
+    <div class="w-[88%] mx-auto max-w-[1440px]" id="Rooms">
+      <h2 class="font-[600] text-[24px]">Available rooms</h2>
+      <div class="flex flex-wrap gap-5 py-6">
+        <div
+          class="w-[400px] h-[340px] bg-gradient-to-t from-[#2366BF] to-[#4796FF] rounded-md flex items-center justify-center"
+        >
+          <div
+            class="flex flex-col gap-5 relative left-[2.5rem] bottom-[1.5rem]"
+          >
+            <div class="flex items-center gap-1">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.414 13.7779C2.5 13.9999 2 15.1919 2 15.1919C2 15.1919 5.398 15.6259 6.949 17.3129C8.5 18.9999 9.071 22.2629 9.071 22.2629C9.071 22.2629 10.47 22.6979 10.485 20.8489C10.5 18.9999 9.778 17.3129 9.778 17.3129L13.091 13.9999L16.701 21.7039C16.701 21.7039 18.08 22.2299 18.04 20.3649C18 18.4999 16.85 10.2419 16.85 10.2419L19.678 7.41294C19.869 7.22845 20.0214 7.00776 20.1262 6.76375C20.231 6.51974 20.2862 6.2573 20.2885 5.99174C20.2908 5.72619 20.2402 5.46283 20.1396 5.21703C20.0391 4.97124 19.8906 4.74794 19.7028 4.56015C19.515 4.37237 19.2917 4.22386 19.0459 4.1233C18.8001 4.02274 18.5368 3.97213 18.2712 3.97444C18.0056 3.97675 17.7432 4.03192 17.4992 4.13674C17.2552 4.24156 17.0345 4.39392 16.85 4.58494L13.947 7.48794C13.947 7.48794 6.148 6.09394 3.824 6.29694C1.5 6.49994 2.559 7.56294 2.559 7.56294L10.203 11.2329L6.95 14.4859C6.95 14.4859 4.328 13.5559 3.414 13.7779Z"
+                  fill="white"
+                />
+              </svg>
+              <p class="text-white">my Dream Place</p>
+            </div>
+            <p class="font-[700] text-[24px] text-white w-[240px]">
+              20% off <br />
+              Use Promotional Coupon Code:
+              <span class="text-[#FFD723]">Orlando</span>
+            </p>
+          </div>
+          <img
+            src="../assets/images/Frame-2.png"
+            class="w-[177px] h-[291px] relative right-[2.5rem]"
+            alt=""
+          />
+        </div>
+        <RoomCard
+          v-for="roomIndex in Object.keys(hotelRooms || {})"
+          :roomDescreption="hotelRooms[roomIndex].description"
+          :roomPhoto="hotelRooms[roomIndex].photos[1].url_640x200"
+          :roomHighlights="hotelRooms[roomIndex].highlights"
+        />
+      </div>
+    </div>
   </main>
 </template>
 
@@ -183,6 +227,7 @@ const hotelDetails = ref(null);
 const hotelDescription = ref(null);
 const nearbyLandmarks = ref(null);
 const hotelBenefits = ref(null);
+const hotelRooms = ref(null);
 const searchStore = useSearchStore();
 const reviewCount = useRoute().query.reviewCount;
 const reviewScore = useRoute().query.reviewScore;
@@ -195,13 +240,16 @@ const address = computed(() =>
   ].filter(Boolean)
 );
 const icons = ref([
-  { label: "Overview", targetScroll: "", isActive: true },
-  { label: "Rooms", targetScroll: "", isActive: false },
+  { label: "Overview", isActive: true },
+  { label: "Rooms", isActive: false },
 ]);
 const activateIcon = (clickedIcon) => {
   icons.value.forEach((icon) => {
     icon.isActive = icon === clickedIcon;
   });
+  document
+    .getElementById(clickedIcon.label)
+    .scrollIntoView({ behavior: "smooth" });
 };
 const calcDriveTime = (distance) => {
   return Math.ceil((distance * 60) / 50);
@@ -276,6 +324,40 @@ onMounted(async () => {
     console.error(error);
   }
 });
-</script>
+onMounted(async () => {
+  const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getRoomList?hotel_id=${
+    hotelID.value
+  }&arrival_date=${searchStore.formatDate(
+    searchStore.checkInDate
+  )}&departure_date=${searchStore.formatDate(
+    searchStore.checkOutDate
+  )}&adults=${searchStore.adults || 1}&children_age=${
+    searchStore.children || 0
+  }%2C17&room_qty=${
+    searchStore.rooms || 1
+  }&languagecode=en-us&currency_code=USD`;
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": config.apiKey,
+      "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
+    },
+  };
 
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    hotelRooms.value = result.data.rooms;
+    console.log(hotelRooms.value);
+  } catch (error) {
+    console.error(error);
+  }
+});
+</script>
+<script>
+import RoomCard from "../components/roomCard.vue";
+export default {
+  components: { RoomCard },
+};
+</script>
 <style lang="scss" scoped></style>
