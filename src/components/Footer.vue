@@ -1,7 +1,7 @@
 <template>
   <div :class="{ 'bg-Gray': props.theme === 'gray' }">
     <div
-      class="w-[88%] mx-auto text-[14px] flex flex-wrap justify-around gap-10 py-14"
+      class="w-[88%] mx-auto text-[14px] flex flex-wrap justify-around gap-10 pb-14 pt-24"
     >
       <section>
         <header>
