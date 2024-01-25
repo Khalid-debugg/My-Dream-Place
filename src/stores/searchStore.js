@@ -11,6 +11,7 @@ export const useSearchStore = defineStore("search", {
       children: null,
       rooms: null,
       totalHotelsNumber: null,
+      priceBreakdownList: [],
     };
   },
   actions: {
@@ -42,6 +43,10 @@ export const useSearchStore = defineStore("search", {
         this.totalHotelsNumber =
           parseInt(result.data.meta[0]?.title.split(" ")[0]) ||
           this.totalHotelsNumber;
+        this.priceBreakdownList = result.data.hotels.map(
+          (hotel) => hotel.property.priceBreakdown
+        );
+        console.log(this.priceBreakdownList);
       } catch (error) {
         console.error(error);
         alert("Please enter valid data");

@@ -73,9 +73,6 @@
 import router from "../router";
 import { computed, onMounted, ref } from "vue";
 import { useSearchStore } from "../stores/searchStore";
-const strikeThroughAmount = ref(0);
-const grossAmount = ref(0);
-const discountRatio = ref(0);
 const props = defineProps([
   "name",
   "reviewScore",
@@ -83,47 +80,21 @@ const props = defineProps([
   "photoUrl",
   "hotelID",
   "hotelDescription",
+  "priceBreakDown",
 ]);
-
-const hotelDescriptionLoading = ref(true);
-// onMounted(async () => {
-//   const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=${
-//     props.hotelID
-//   }&arrival_date=${searchStore.formatDate(
-//     searchStore.checkInDate
-//   )}&departure_date=${searchStore.formatDate(
-//     searchStore.checkOutDate
-//   )}&adults=${searchStore.adults}&children_age=${
-//     searchStore.children
-//   }%2C17&room_qty=${searchStore.rooms}&languagecode=en-us&currency_code=USD`;
-//   const options = {
-//     method: "GET",
-//     headers: {
-//  'X-RapidAPI-Key': '6cb2b953demsh5536b89e44c6bbbp1557c2jsnf4dba04990e6',
-//       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-//     },
-//   };
-
-//   try {
-//     const response = await fetch(url, options);
-//     const result = await response.json();
-
-//     console.log(result);
-//     strikeThroughAmount.value = Math.round(
-//       result.data.product_price_breakdown.strikethrough_amount?.value
-//     );
-//     grossAmount.value = Math.round(
-//       result.data.product_price_breakdown.gross_amount.value
-//     );
-//     discountRatio.value = Math.round(
-//       ((strikeThroughAmount.value - grossAmount.value) /
-//         strikeThroughAmount.value) *
-//         100
-//     );
-//   } catch (error) {
-//     console.error(error);
-//   }
-// });
+const strikeThroughAmount = ref(
+  Math.round(props.priceBreakDown.strikethroughPrice?.value)
+);
+const grossAmount = computed(() =>
+  Math.round(props.priceBreakDown.grossPrice?.value)
+);
+const discountRatio = computed(() =>
+  Math.round(
+    ((strikeThroughAmount.value - grossAmount.value) /
+      strikeThroughAmount.value) *
+      100
+  )
+);
 </script>
 <script>
 import Review from "./Review.vue";

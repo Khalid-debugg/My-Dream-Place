@@ -211,8 +211,9 @@
         <div v-if="filteredHotels?.length > 0">
           <HotelCard
             class="my-5"
-            v-for="hotel in filteredHotels"
+            v-for="(hotel, index) in filteredHotels"
             :key="hotel.id"
+            :priceBreakDown="searchStore.priceBreakdownList[index]"
             :name="hotel.property.name"
             :reviewScore="hotel.property.reviewScore"
             :reviewCount="hotel.property.reviewCount"
