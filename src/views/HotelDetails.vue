@@ -214,6 +214,7 @@
         />
       </div>
     </div>
+    <Restriction class="w-[88%] mx-auto max-w-[1440px] mt-28" />
   </main>
 </template>
 
@@ -355,9 +356,10 @@ onMounted(async () => {
 });
 </script>
 <script>
-import RoomCard from "../components/roomCard.vue";
+import RoomCard from "../components/RoomCard.vue";
+import Restriction from "../components/Restriction.vue";
 export default {
-  components: { RoomCard },
+  components: { RoomCard, Restriction },
 };
 </script>
 <style lang="scss" scoped></style>

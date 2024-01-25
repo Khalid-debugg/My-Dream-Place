@@ -1,7 +1,7 @@
 <template>
   <NavBar />
   <router-view></router-view>
-  <Footer />
+  <Footer :theme="theme" />
 </template>
 
 <script>
@@ -12,7 +12,18 @@ export default {
 };
 </script>
 <script setup>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+const theme = computed(() => {
+  if (
+    useRoute().fullPath === "/trips" ||
+    useRoute().fullPath.includes("/hotel")
+  ) {
+    return "gray";
+  }
+  return "";
+});
+console.log(useRoute());
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

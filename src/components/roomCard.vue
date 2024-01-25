@@ -7,7 +7,7 @@
     />
     <div class="p-5 bg-white flex flex-col justify-between min-h-[280px]">
       <h3 class="font-[500] text-[18px]">
-        {{ props.roomDescreption.split(".")[0] }}.
+        {{ props.roomDescreption.split(".")[0].split(",")[0] }}.
       </h3>
       <div class="flex flex-col gap-2">
         <div
@@ -48,7 +48,6 @@
 
 <script setup>
 const props = defineProps(["roomDescreption", "roomPhoto", "roomHighlights"]);
-console.log(props.roomHighlights);
 </script>
 
 <style lang="scss" scoped></style>
