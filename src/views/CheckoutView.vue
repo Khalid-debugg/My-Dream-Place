@@ -3,11 +3,11 @@
     <div class="w-[88%] max-w-[1440px] mx-auto py-14 flex flex-col gap-10">
       <h1 class="font-[600] text-[32px]">Secure your reservation</h1>
       <Restriction />
-      <main class="flex flex-wrap">
-        <section class="xl:w-[65%] w-full flex flex-col gap-10">
+      <main class="flex flex-wrap justify-between">
+        <section class="xl:w-[65%] w-full flex flex-col gap-8">
           <div class="rounded-md overflow-hidden">
             <div
-              class="flex flex-wrap bg-[#2F80ED] py-3 px-5 text-white gap-3 items-center"
+              class="flex flex-wrap bg-[#2F80ED] py-4 px-5 text-white gap-3 items-center"
             >
               <svg
                 width="28"
@@ -99,7 +99,7 @@
           </div>
           <div class="rounded-md overflow-hidden">
             <div
-              class="flex flex-wrap bg-[#2F80ED] py-3 px-5 text-white gap-3 items-center"
+              class="flex flex-wrap bg-[#2F80ED] py-4 px-5 text-white gap-3 items-center"
             >
               <svg
                 width="28"
@@ -244,8 +244,105 @@
               </div>
             </div>
           </div>
+          <div class="rounded-md overflow-hidden">
+            <div
+              class="bg-[#F2C94C] py-4 px-5 items-center font-[500] text-[18px]"
+            >
+              Important information about your booking
+            </div>
+            <div class="flex flex-col bg-white px-6 py-8 gap-6">
+              <p>
+                1. This rate is non-refundable. If you change or cancel your
+                booking you will not get a refund or credit to use for a future
+                stay. <br />
+                2. Stay extensions will require a new reservation. <br />
+                3. Front desk staff will greet guests on arrival <br />
+                4. No refunds will be issued for late check-in or early
+                check-out. <br />
+              </p>
+              <p>
+                By clicking the button below, I acknowledge that I have reviewed
+                the <span class="text-blue-500">Privacy Statement</span> and
+                have reviewd and accept the
+                <span class="text-blue-500">Rules and Restrictions</span> and
+                <span class="text-blue-500">Terms of Use.</span>
+              </p>
+              <button class="w-[160px] text-white bg-[#2F80ED] rounded-md p-3">
+                Complete Booking
+              </button>
+              <div class="flex gap-2 items-center">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 7.75C10.11 7.75 9.75 8.54 9.75 10V10.62H14.25V10C14.25 8.54 13.89 7.75 12 7.75Z"
+                    fill="#219653"
+                  />
+                  <path
+                    d="M11.998 15.0979C12.2897 15.0979 12.5695 14.9821 12.7758 14.7758C12.9821 14.5695 13.098 14.2897 13.098 13.9979C13.098 13.7062 12.9821 13.4264 12.7758 13.2201C12.5695 13.0138 12.2897 12.8979 11.998 12.8979C11.7063 12.8979 11.4265 13.0138 11.2202 13.2201C11.0139 13.4264 10.898 13.7062 10.898 13.9979C10.898 14.2897 11.0139 14.5695 11.2202 14.7758C11.4265 14.9821 11.7063 15.0979 11.998 15.0979Z"
+                    fill="#219653"
+                  />
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17.38 14.5C17.38 16.7 16.7 17.38 14.5 17.38H9.5C7.3 17.38 6.62 16.7 6.62 14.5V13.5C6.62 11.79 7.03 11 8.25 10.73V10C8.25 9.07 8.25 6.25 12 6.25C15.75 6.25 15.75 9.07 15.75 10V10.73C16.97 11 17.38 11.79 17.38 13.5V14.5Z"
+                    fill="#219653"
+                  />
+                </svg>
+                <p>
+                  We use secure transmission and encrypted storage to protect
+                  your personal information
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
-        <section></section>
+        <section class="xl:w-[32%] w-full flex flex-col gap-8">
+          <div class="rounded-md overflow-hidden">
+            <img
+              src="../assets/images/Home/Japan.png"
+              alt=""
+              class="w-full h-[180px] object-cover"
+            />
+            <div class="p-5 bg-white flex flex-col gap-4">
+              <div class="flex flex-col gap-2">
+                <p class="font-[500] text-[18px]">Lakeside Motel Warefront</p>
+                <Review review-count="1200" review-score="4.5" />
+              </div>
+              <div class="flex flex-col gap-2">
+                <p class="text-red-400">Non refundable</p>
+                <p>Check in: Sunday, March 18, 2022</p>
+                <p>Check out: Tuesday, March 20, 2022</p>
+                <p>2 night stay</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-md overflow-hidden">
+            <div
+              class="bg-[#85E0AB] py-4 px-5 items-center font-[500] text-[16px]"
+            >
+              Price Details
+            </div>
+            <div class="bg-white divide-y-2">
+              <div class="flex flex-col gap-3 p-5">
+                <div class="flex justify-between">
+                  <p>1 room X 2 nights</p>
+                  <p>$ 120.32</p>
+                </div>
+                <div class="flex justify-between">
+                  <p>Tax and service fees</p>
+                  <p>$ 8.32</p>
+                </div>
+              </div>
+              <div class="flex justify-between items-center p-5">
+                <p class="font-[500] text-[16px]">Total</p>
+                <p class="font-[600] text-[20px]">$130</p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   </div>
@@ -254,8 +351,9 @@
 <script setup></script>
 <script>
 import Restriction from "../components/Restriction.vue";
+import Review from "../components/Review.vue";
 export default {
-  components: { Restriction },
+  components: { Restriction, Review },
 };
 </script>
 <style lang="scss" scoped></style>
