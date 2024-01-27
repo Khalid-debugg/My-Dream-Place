@@ -18,10 +18,7 @@
         </div>
       </div>
       <div class="flex flex-col justify-between h-full">
-        <Review
-          :reviewCount="props.reviewCount"
-          :reviewScore="props.reviewScore"
-        />
+        <Review :reviewCount="reviewCount" :reviewScore="reviewScore" />
         <div class="flex justify-between items-center flex-wrap">
           <div>
             <p class="max-w-[25rem] text-[13px]">
@@ -39,18 +36,19 @@
           <button
             @click="
               userStore.currentHotel = {
-                reviewCount: props.reviewCount,
-                reviewScore: props.reviewScore,
-                hotelName: props.name,
-                priceBreakDown: props.priceBreakDown,
-                checkInDate: searchStore.checkInDate,
-                checkOutDate: searchStore.checkOutDate,
+                reviewCount: reviewCount,
+                reviewScore: reviewScore,
+                hotelName: name,
+                priceBreakDown: priceBreakDown,
+                checkInDate: new Date(searchStore.checkInDate),
+                checkOutDate: new Date(searchStore.checkOutDate),
+                photoUrl: photoUrl,
               };
               router.push({
-                path: `/hotel/${props.hotelID}`,
+                path: `/hotel/${hotelID}`,
                 query: {
-                  reviewScore: props.reviewScore,
-                  reviewCount: props.reviewCount,
+                  reviewScore: reviewScore,
+                  reviewCount: reviewCount,
                 },
               });
             "

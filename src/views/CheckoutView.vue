@@ -302,22 +302,36 @@
           </div>
         </section>
         <section class="md:w-[32%] w-full flex flex-col gap-8 py-5 md:py-0">
-          <div class="rounded-md overflow-hidden">
+          <div v-if="userStore.shoppingCart" class="rounded-md overflow-hidden">
             <img
-              src="../assets/images/Home/Japan.png"
+              :src="userStore.shoppingCart.photoUrl"
               alt=""
               class="w-full h-[180px] object-cover"
             />
             <div class="p-5 bg-white flex flex-col gap-4">
               <div class="flex flex-col gap-2">
-                <p class="font-[500] text-[18px]">Lakeside Motel Warefront</p>
-                <Review review-count="1200" review-score="4.5" />
+                <p class="font-[500] text-[18px]">
+                  {{ userStore.shoppingCart.hotelName }}
+                </p>
+                <Review
+                  :review-count="userStore.shoppingCart.reviewCount"
+                  :review-score="userStore.shoppingCart.reviewScore"
+                />
               </div>
               <div class="flex flex-col gap-2">
                 <p class="text-red-400">Non refundable</p>
-                <p>Check in: Sunday, March 18, 2022</p>
-                <p>Check out: Tuesday, March 20, 2022</p>
-                <p>2 night stay</p>
+                <p>
+                  Check in:
+                  {{ formatCustomDate(userStore.shoppingCart.checkInDate) }}
+                </p>
+                <p>
+                  Check out:
+                  {{ formatCustomDate(userStore.shoppingCart.checkOutDate) }}
+                </p>
+                <p>
+                  {{ numberOfNights }}
+                  night stay
+                </p>
               </div>
             </div>
           </div>
@@ -328,19 +342,25 @@
               Price Details
             </div>
             <div class="bg-white divide-y-2">
-              <div class="flex flex-col gap-3 p-5">
+              <div
+                v-if="userStore.shoppingCart"
+                class="flex flex-col gap-3 p-5"
+              >
                 <div class="flex justify-between">
-                  <p>1 room X 2 nights</p>
-                  <p>$ 120.32</p>
+                  <p>1 room X {{ numberOfNights }} nights</p>
+                  <p>
+                    $
+                    {{ cost }}
+                  </p>
                 </div>
                 <div class="flex justify-between">
                   <p>Tax and service fees</p>
-                  <p>$ 8.32</p>
+                  <p>$ {{ taxes }}</p>
                 </div>
               </div>
               <div class="flex justify-between items-center p-5">
                 <p class="font-[500] text-[16px]">Total</p>
-                <p class="font-[600] text-[20px]">$130</p>
+                <p class="font-[600] text-[20px]">${{ total }}</p>
               </div>
             </div>
           </div>
@@ -350,10 +370,43 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { computed, ref } from "vue";
+import { useUserStore } from "../stores/userStore";
+const userStore = useUserStore();
+const cost = ref(userStore.shoppingCart.priceBreakDown.grossPrice.value);
+const taxes = computed(
+  () => (userStore.shoppingCart.priceBreakDown.grossPrice.value * 14) / 100
+);
+const total = computed(() => cost.value + taxes.value);
+const numberOfNights = computed(() =>
+  getDaysDifference(
+    userStore.shoppingCart.checkInDate,
+    userStore.shoppingCart.checkOutDate
+  )
+);
+function formatCustomDate(date) {
+  const options = {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  };
+  return date.toLocaleDateString("en-US", options);
+}
+function getDaysDifference(date1, date2) {
+  const differenceInMilliseconds = date2 - date1;
+
+  const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+  return Math.round(differenceInDays);
+}
+console.log(typeof userStore.shoppingCart.checkInDate);
+</script>
 <script>
 import Restriction from "../components/Restriction.vue";
 import Review from "../components/Review.vue";
+import { computed } from "vue";
 export default {
   components: { Restriction, Review },
 };

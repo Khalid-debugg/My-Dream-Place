@@ -28,5 +28,21 @@ export const useUserStore = defineStore("user", {
       this.redirectedPath = "/";
     },
   },
-  persist: { storage: sessionStorage },
+  persist: {
+    afterRestore: (ctx) => {
+      if (window.sessionStorage.getItem("user")) {
+        ctx.store.shoppingCart.checkInDate = new Date(
+          JSON.parse(
+            window.sessionStorage.getItem("user")
+          ).shoppingCart.checkInDate
+        );
+        ctx.store.shoppingCart.checkOutDate = new Date(
+          JSON.parse(
+            window.sessionStorage.getItem("user")
+          ).shoppingCart.checkOutDate
+        );
+      }
+    },
+    storage: sessionStorage,
+  },
 });

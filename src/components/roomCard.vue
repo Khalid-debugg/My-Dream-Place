@@ -42,7 +42,7 @@
       <button
         class="bg-[#2F80ED] text-white p-2 rounded-md"
         @click="
-          userStore.shoppingCart = userStore.currentHotel;
+          userStore.shoppingCart = { ...userStore.currentHotel };
           router.push('/checkout');
         "
       >
