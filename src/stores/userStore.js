@@ -8,6 +8,9 @@ export const useUserStore = defineStore("user", {
       isAuthenticated: false,
       redirectedPath: "/",
       showModal: false,
+      currentHotel: null,
+      shoppingCart: null,
+      trips: [],
     };
   },
   actions: {

@@ -38,13 +38,21 @@
         <div class="flex justify-between items-center flex-wrap">
           <button
             @click="
+              userStore.currentHotel = {
+                reviewCount: props.reviewCount,
+                reviewScore: props.reviewScore,
+                hotelName: props.name,
+                priceBreakDown: props.priceBreakDown,
+                checkInDate: searchStore.checkInDate,
+                checkOutDate: searchStore.checkOutDate,
+              };
               router.push({
                 path: `/hotel/${props.hotelID}`,
                 query: {
                   reviewScore: props.reviewScore,
                   reviewCount: props.reviewCount,
                 },
-              })
+              });
             "
             class="bg-Blue text-white text-[14px] font-[500] rounded-md inline-flex px-[18px] py-[10px] max-h-[40px] items-center"
           >
@@ -72,7 +80,10 @@
 <script setup>
 import router from "../router";
 import { computed, onMounted, ref } from "vue";
+import { useUserStore } from "../stores/userStore";
 import { useSearchStore } from "../stores/searchStore";
+const userStore = useUserStore();
+const searchStore = useSearchStore();
 const props = defineProps([
   "name",
   "reviewScore",

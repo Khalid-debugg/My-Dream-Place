@@ -39,7 +39,13 @@
           <p class="text-[14px]">{{ highlight.translated_name }}</p>
         </div>
       </div>
-      <button class="bg-[#2F80ED] text-white p-2 rounded-md">
+      <button
+        class="bg-[#2F80ED] text-white p-2 rounded-md"
+        @click="
+          userStore.shoppingCart = userStore.currentHotel;
+          router.push('/checkout');
+        "
+      >
         Reserve suit
       </button>
     </div>
@@ -47,7 +53,10 @@
 </template>
 
 <script setup>
+import router from "../router";
+import { useUserStore } from "../stores/userStore";
 const props = defineProps(["roomDescreption", "roomPhoto", "roomHighlights"]);
+const userStore = useUserStore();
 </script>
 
 <style lang="scss" scoped></style>

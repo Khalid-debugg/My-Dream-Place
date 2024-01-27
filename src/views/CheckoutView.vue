@@ -1,10 +1,12 @@
 <template>
   <div class="bg-Gray">
-    <div class="w-[88%] max-w-[1440px] mx-auto py-14 flex flex-col gap-10">
+    <div
+      class="w-[88%] max-w-[1440px] mx-auto pt-14 pb-28 flex flex-col gap-10"
+    >
       <h1 class="font-[600] text-[32px]">Secure your reservation</h1>
       <Restriction />
       <main class="flex flex-wrap justify-between">
-        <section class="xl:w-[65%] w-full flex flex-col gap-8">
+        <section class="md:w-[65%] w-full flex flex-col gap-8 py-5 md:py-0">
           <div class="rounded-md overflow-hidden">
             <div
               class="flex flex-wrap bg-[#2F80ED] py-4 px-5 text-white gap-3 items-center"
@@ -174,7 +176,7 @@
                   <label for="cardNumber" class="font-[500]"
                     >Expiration Date</label
                   >
-                  <div class="flex gap-4">
+                  <div class="flex gap-4 cursor-pointer">
                     <div
                       class="flex justify-between items-center bg-Gray w-[150px] p-3 rounded"
                     >
@@ -219,7 +221,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="flex gap-4">
+                <div class="flex gap-4 cursor-pointer">
                   <div>
                     <label for="securityCode" class="font-[500]"
                       >Security Code</label
@@ -299,7 +301,7 @@
             </div>
           </div>
         </section>
-        <section class="xl:w-[32%] w-full flex flex-col gap-8">
+        <section class="md:w-[32%] w-full flex flex-col gap-8 py-5 md:py-0">
           <div class="rounded-md overflow-hidden">
             <img
               src="../assets/images/Home/Japan.png"
