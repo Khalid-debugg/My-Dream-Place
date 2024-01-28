@@ -230,15 +230,12 @@ onMounted(async () => {
       "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
     },
   };
-  console.log(url);
 
   try {
     const response = await fetch(url, options);
     const result = await response.json();
     hotelDetails.value = result.data;
     hotelBenefits.value = hotelDetails.value.top_ufi_benefits;
-
-    console.log(result);
   } catch (error) {
     console.error(error);
   }
@@ -257,7 +254,6 @@ onMounted(async () => {
     const response = await fetch(url, options);
     const result = await response.json();
     hotelDescription.value = result.data;
-    console.log(result);
   } catch (error) {
     console.error(error);
   }
@@ -276,7 +272,6 @@ onMounted(async () => {
     const response = await fetch(url, options);
     const result = await response.json();
     nearbyLandmarks.value = result.data.popular_landmarks;
-    console.log(result);
   } catch (error) {
     console.error(error);
   }
@@ -305,7 +300,6 @@ onMounted(async () => {
     const response = await fetch(url, options);
     const result = await response.json();
     hotelRooms.value = result.data.rooms;
-    console.log(hotelRooms.value);
   } catch (error) {
     console.error(error);
   }

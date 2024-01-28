@@ -26,7 +26,6 @@ const theme = computed(() => {
   }
   return "";
 });
-console.log(useRoute());
 </script>
 
 <style lang="scss" scoped></style>

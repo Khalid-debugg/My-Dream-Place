@@ -61,7 +61,6 @@ const strikeThroughAmount = ref(
 const grossAmount = computed(() =>
   Math.round(props.priceBreakdown?.grossPrice?.value)
 );
-console.log(props.priceBreakdown);
 function formatCustomDate(date) {
   const options = {
     weekday: "long",

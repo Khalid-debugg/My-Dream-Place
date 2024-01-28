@@ -34,11 +34,9 @@ export const useSearchStore = defineStore("search", {
           "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
         },
       };
-      console.log(url);
       try {
         const response = await fetch(url, options);
         const result = await response.json();
-        console.log(result);
         this.searchResults = result;
         this.totalHotelsNumber =
           parseInt(result.data.meta[0]?.title.split(" ")[0]) ||
@@ -46,7 +44,6 @@ export const useSearchStore = defineStore("search", {
         this.priceBreakdownList = result.data.hotels.map(
           (hotel) => hotel.property.priceBreakdown
         );
-        console.log(this.priceBreakdownList);
       } catch (error) {
         console.error(error);
         alert("Please enter valid data");
