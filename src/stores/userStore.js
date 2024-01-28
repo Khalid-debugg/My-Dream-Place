@@ -30,7 +30,7 @@ export const useUserStore = defineStore("user", {
   },
   persist: {
     afterRestore: (ctx) => {
-      if (window.sessionStorage.getItem("user").shoppingCart) {
+      if (window.sessionStorage.getItem("user")?.shoppingCart) {
         ctx.store.shoppingCart.checkInDate = new Date(
           JSON.parse(
             window.sessionStorage.getItem("user")

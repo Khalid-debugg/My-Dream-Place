@@ -11,7 +11,7 @@
       <div class="bg-white flex flex-col gap-4">
         <div class="flex flex-col gap-2">
           <p class="font-[500] text-[18px]">{{ hotelName }}</p>
-          <Review :review-count="5" :review-score="5" />
+          <Review :review-count="reviewCount" :review-score="reviewScore" />
         </div>
         <div class="flex flex-col gap-2">
           <p class="text-red-400">Non refundable</p>

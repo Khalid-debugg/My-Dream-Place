@@ -8,9 +8,10 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
+import BookingModal from "../components/BookingModal.vue";
 import Footer from "../components/Footer.vue";
 export default {
-  components: { NavBar, Footer },
+  components: { NavBar, Footer, BookingModal },
 };
 </script>
 <script setup>

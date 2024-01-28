@@ -1,5 +1,9 @@
 <template>
   <div class="bg-Gray">
+    <BookingModal
+      v-if="showSuccessfullBookingModal"
+      @close-modal="closeModal"
+    />
     <div
       class="w-[88%] max-w-[1440px] mx-auto pt-14 pb-28 flex flex-col gap-10"
     >
@@ -275,6 +279,7 @@
                 @click="
                   userStore.trips.push(userStore.shoppingCart);
                   userStore.shoppingCart = null;
+                  showSuccessfullBookingModal = true;
                 "
               >
                 Complete Booking
@@ -384,6 +389,7 @@
 import { computed, ref } from "vue";
 import { useUserStore } from "../stores/userStore";
 const userStore = useUserStore();
+const showSuccessfullBookingModal = ref(false);
 const cost = ref(
   parseFloat(userStore.shoppingCart?.priceBreakDown.grossPrice.value.toFixed(2))
 );
@@ -411,13 +417,17 @@ function getDaysDifference(date1, date2) {
 
   return Math.round(differenceInDays);
 }
+function closeModal() {
+  showSuccessfullBookingModal.value = false;
+}
 </script>
 <script>
 import Restriction from "../components/Restriction.vue";
 import Review from "../components/Review.vue";
+import BookingModal from "../components/BookingModal.vue";
 import { computed } from "vue";
 export default {
-  components: { Restriction, Review },
+  components: { Restriction, Review, BookingModal },
 };
 </script>
 <style lang="scss" scoped></style>
