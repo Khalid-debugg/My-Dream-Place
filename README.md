@@ -1,29 +1,35 @@
-# My-Dream-Place
+<!-- README template taken from https://github.com/othneildrew/Best-README-Template?tab=readme-ov-file -->
 
-This template should help get you started developing with Vue 3 in Vite.
+<a name="readme-top"></a>
 
-## Recommended IDE Setup
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/Khalid-debugg/My-Dream-Place">
+    <img src="/src/assets/images/Plane Icon.png" alt="Logo" width="80" height="80">
+  </a>
 
-## Customize configuration
+  <h3 align="center">My Dream Place</h3>
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+  <p align="center">
+    Your Fantasy, Our Reality: My Dream Place - Tailoring Dreams into Stays.
+    <br />
+    <a href="https://github.com/Khalid-debugg/My-Dream-Place"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Khalid-debugg/My-Dream-Place/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Khalid-debugg/My-Dream-Place/issues">Request Feature</a>
+  </p>
+</div>
+<!-- MARKDOWN LINKS & IMAGES -->
+[stars-url]: https://github.com/Khalid-debugg/My-Dream-Place/stargazers
+[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-url]: https://github.com/Khalid-debugg/My-Dream-Place/issues
+[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[linkedin-url]: https://www.linkedin.com/in/khalidsherif1/
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
