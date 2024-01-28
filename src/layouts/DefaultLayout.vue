@@ -1,7 +1,9 @@
 <template>
-  <NavBar />
-  <router-view></router-view>
-  <Footer :theme="theme" />
+  <div class="flex flex-col min-h-screen">
+    <NavBar />
+    <router-view></router-view>
+    <Footer :theme="theme" />
+  </div>
 </template>
 
 <script>

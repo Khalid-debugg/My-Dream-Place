@@ -269,7 +269,14 @@
                 <span class="text-blue-500">Rules and Restrictions</span> and
                 <span class="text-blue-500">Terms of Use.</span>
               </p>
-              <button class="w-[160px] text-white bg-[#2F80ED] rounded-md p-3">
+              <button
+                class="w-[160px] text-white bg-[#2F80ED] rounded-md p-3"
+                :disabled="!userStore.shoppingCart"
+                @click="
+                  userStore.trips.push(userStore.shoppingCart);
+                  userStore.shoppingCart = null;
+                "
+              >
                 Complete Booking
               </button>
               <div class="flex gap-2 items-center">
@@ -322,11 +329,11 @@
                 <p class="text-red-400">Non refundable</p>
                 <p>
                   Check in:
-                  {{ formatCustomDate(userStore.shoppingCart.checkInDate) }}
+                  {{ formatCustomDate(userStore.shoppingCart?.checkInDate) }}
                 </p>
                 <p>
                   Check out:
-                  {{ formatCustomDate(userStore.shoppingCart.checkOutDate) }}
+                  {{ formatCustomDate(userStore.shoppingCart?.checkOutDate) }}
                 </p>
                 <p>
                   {{ numberOfNights }}
@@ -360,7 +367,10 @@
               </div>
               <div class="flex justify-between items-center p-5">
                 <p class="font-[500] text-[16px]">Total</p>
-                <p class="font-[600] text-[20px]">${{ total }}</p>
+                <p class="font-[600] text-[20px]">
+                  $ <span v-if="userStore.shoppingCart">{{ total }}</span>
+                  <span v-else>0</span>
+                </p>
               </div>
             </div>
           </div>
@@ -374,15 +384,15 @@
 import { computed, ref } from "vue";
 import { useUserStore } from "../stores/userStore";
 const userStore = useUserStore();
-const cost = ref(userStore.shoppingCart.priceBreakDown.grossPrice.value);
-const taxes = computed(
-  () => (userStore.shoppingCart.priceBreakDown.grossPrice.value * 14) / 100
+const cost = ref(
+  parseFloat(userStore.shoppingCart?.priceBreakDown.grossPrice.value.toFixed(2))
 );
+const taxes = computed(() => parseFloat(((cost.value * 14) / 100).toFixed(2)));
 const total = computed(() => cost.value + taxes.value);
 const numberOfNights = computed(() =>
   getDaysDifference(
-    userStore.shoppingCart.checkInDate,
-    userStore.shoppingCart.checkOutDate
+    userStore.shoppingCart?.checkInDate,
+    userStore.shoppingCart?.checkOutDate
   )
 );
 function formatCustomDate(date) {
@@ -401,7 +411,6 @@ function getDaysDifference(date1, date2) {
 
   return Math.round(differenceInDays);
 }
-console.log(typeof userStore.shoppingCart.checkInDate);
 </script>
 <script>
 import Restriction from "../components/Restriction.vue";
