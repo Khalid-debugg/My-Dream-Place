@@ -61,16 +61,12 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -78,7 +74,7 @@
 
 ## About The Project
 
-<img src="/src/assets/images/Home/Home-screenshot.png" alt="Logo" >
+<img src="/src/assets/images/Screenshots/Home-screenshot.png" alt="screenshot" >
 
 # My Dream Place
 
@@ -112,8 +108,8 @@ Welcome to our Hotel Booking Web App! This application is designed to provide us
 
 ### Installation
 
-1. Get a free API Key for hotels at [Booking_API](https://rapidapi.com/DataCrawler/api/booking-com15/)
-2. Get a free API Key for Maps at [Maps_API](https://console.cloud.google.com/)
+1. Get your API Key for hotels at [Booking_API](https://rapidapi.com/DataCrawler/api/booking-com15/)
+2. Get your API Key for Maps at [Maps_API](https://console.cloud.google.com/)
 3. Clone the repo
    ```sh
    git clone https://github.com/khalid-debugg/my-dream-place.git
@@ -137,9 +133,38 @@ Welcome to our Hotel Booking Web App! This application is designed to provide us
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Search results page
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+<img src="/src/assets/images/Screenshots/Search-screenshot.png" alt="screenshot" >
+
+In this page you can:
+
+1. Sort hotels according to sort options derived from the API
+2. Filter hotels by their names
+3. Filter hotels by budget range
+4. Filter hotels by review score
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Hotel Details page
+
+<img src="/src/assets/images/Screenshots/Hotel-screenshot.png" alt="screenshot" >
+
+In this page you can browse the hotel details, and its nearby landmarks, and also browse the hotel rooms and its facilities and Reserve it.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Checkout page
+
+<img src="/src/assets/images/Screenshots/Checkout-screenshot.png" alt="screenshot" >
+
+In this page you can check the price details and confirm room booking
+
+### Trips page
+
+<img src="/src/assets/images/Screenshots/Trips-screenshot.png" alt="screenshot" >
+
+In this page you can check your reserved trips with its details
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

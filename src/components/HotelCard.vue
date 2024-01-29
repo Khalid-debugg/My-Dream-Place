@@ -22,7 +22,7 @@
         <div class="flex justify-between items-center flex-wrap">
           <div>
             <p class="max-w-[25rem] text-[13px]">
-              {{ hotelDescription.split("•")[1] }}
+              {{ hotelDescription }}
             </p>
           </div>
           <div
