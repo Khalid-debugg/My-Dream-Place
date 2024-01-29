@@ -78,9 +78,23 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/Khalid-debugg/My-Dream-Place/src/assets/images/Home/Home-screenshot.png)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+# My Dream Place
+
+Welcome to our Hotel Booking Web App! This application is designed to provide users with a seamless and enjoyable experience when searching and booking hotels. Utilizing the [Booking.com API](https://rapidapi.com/DataCrawler/api/booking-com15/), we bring you real-time access to a vast array of hotels worldwide. The intuitive user interface is based on the meticulously crafted design available on [Figma](https://www.figma.com/file/BQHVuw93nxwUFEnNuyPDdd/Untitled?type=design&node-id=0%3A1&mode=design&t=rGCWh3ItgSBgdGdO-1), ensuring a visually appealing and user-friendly platform.
+
+## Features
+
+- **Search and Discover:** Seamlessly search and discover a wide range of hotels based on your preferences, including location, dates, and accommodation types.
+
+- **Detailed Listings:** Access detailed information about each hotel, including amenities, pricing, and customer reviews, to make informed decisions.
+
+- **Booking Management:** Easily manage your bookings, view reservation details, and make changes as needed.
+
+- **User-Friendly Interface:** Our application boasts an intuitive and responsive design, ensuring a smooth experience across various devices.
+
+- **Real-Time Availability:** Thanks to the Booking.com API integration, we provide real-time availability and pricing information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -96,32 +110,25 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Get a free API Key for hotels at [Booking_API](https://rapidapi.com/DataCrawler/api/booking-com15/)
+2. Get a free API Key for Maps at [Maps_API](https://console.cloud.google.com/)
+3. Clone the repo
    ```sh
    git clone https://github.com/khalid-debugg/my-dream-place.git
    ```
-3. Install NPM packages
+4. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+5. Enter your API in `config.js`
+
    ```js
-   const API_KEY = "ENTER YOUR API";
+   const config = {
+     apiKey: "GENERATE_YOUR_OWN_KEY",
+     mapKey: "GENERATE_YOUR_OWN_KEY",
+   };
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -166,44 +173,26 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- LICENSE -->
-
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- CONTACT -->
 
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Khalid Sherif - [@shefa2130](https://twitter.com/shefa2130) - khalidsherif.dev@gmail.com
 
 Project Link: [https://github.com/khalid-debugg/my-dream-place](https://github.com/khalid-debugg/my-dream-place)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments
-
-- []()
-- []()
-- []()
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/khalid-debugg/my-dream-place.svg?style=for-the-badge
 [contributors-url]: https://github.com/Khalid-debugg/My-Dream-Place/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/khalid-debugg/my-dream-place.svg?style=for-the-badge
 [forks-url]: https://github.com/khalid-debugg/my-dream-place/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/khalid-debugg/my-dream-place.svg?style=for-the-badge
 [stars-url]: https://github.com/khalid-debugg/my-dream-place/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/khalid-debugg/my-dream-place.svg?style=for-the-badge
 [issues-url]: https://github.com/khalid-debugg/my-dream-place/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/khalidsherif1/
