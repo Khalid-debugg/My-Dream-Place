@@ -78,7 +78,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/Khalid-debugg/My-Dream-Place/src/assets/images/Home/Home-screenshot.png)
+[![Product Name Screen Shot][product-screenshot]](/src/assets/images/Home/Home-screenshot.png)
 
 # My Dream Place
 
@@ -140,19 +140,6 @@ Welcome to our Hotel Booking Web App! This application is designed to provide us
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ROADMAP -->
-
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-  - [ ] Nested Feature
-
-See the [open issues](https://github.com/khalid-debugg/my-dream-place/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
