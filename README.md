@@ -78,7 +78,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](/src/assets/images/Home/Home-screenshot.png)
+<img src="/src/assets/images/Home/Home-screenshot.png" alt="Logo" >
 
 # My Dream Place
 
