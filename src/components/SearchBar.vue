@@ -436,15 +436,15 @@ const getCityOptions = async () => {
 
   try {
     const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error("Failed to fetch city options");
-    }
+    if (response.status >= 400 && response.status < 500) {
+          throw new Error("The developer is currently broke, can't afford the premium api key 😢, contact here to refresh the freemium one ==> khalidsherif.dev@gmail.com , or buy your own and clone the project and inject it in the config file")
+        }
     const data = await response.json();
     cityOptions.value = computed(() =>
       data?.data.filter((city) => city.search_type === "city")
     );
   } catch (error) {
-    console.error("Error fetching city options:", error);
+    alert(error.message)
   }
 };
 const format = (date) => {
@@ -461,15 +461,15 @@ const selectCity = (cityOption) => {
   searchStore.city = cityOption;
 };
 const searchHotels = async () => {
-  if (
-    !searchStore.city ||
-    !searchStore.checkInDate ||
-    !searchStore.checkOutDate
-  ) {
-    isInputValid.value = false;
-    setTimeout(() => (isInputValid.value = true), 1000);
-    return;
-  }
+  // if (
+  //   !searchStore.city ||
+  //   !searchStore.checkInDate ||
+  //   !searchStore.checkOutDate
+  // ) {
+  //   isInputValid.value = false;
+  //   setTimeout(() => (isInputValid.value = true), 1000);
+  //   return;
+  // }
   sessionStorage.clear();
   router.push({ path: "/search/results" });
   await searchStore.sendSearchRequest();

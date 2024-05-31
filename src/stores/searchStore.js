@@ -36,6 +36,9 @@ export const useSearchStore = defineStore("search", {
       };
       try {
         const response = await fetch(url, options);
+        if (response.status >= 400 && response.status < 500) {
+          throw new Error("The developer is currently broke, can't afford the premium api key 😢, contact here to refresh the freemium one khalidsherif.dev@gmail.com")
+        }
         const result = await response.json();
         this.searchResults = result;
         this.totalHotelsNumber =
@@ -45,8 +48,7 @@ export const useSearchStore = defineStore("search", {
           (hotel) => hotel.property.priceBreakdown
         );
       } catch (error) {
-        console.error(error);
-        alert("Please enter valid data");
+        alert(error.message);
       }
     },
     formatDate(date) {
