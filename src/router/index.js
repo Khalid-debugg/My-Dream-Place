@@ -12,15 +12,15 @@ const router = createRouter({
       path: "/",
       component: DefaultLayout,
       children: [
-        { path: "", component: () => import("@/views/HomeView.vue") },
+        { path: "", component: async () => await import("../views/HomeView.vue") },
 
         {
           path: "hotel/:id",
-          component: () => import("@/views/HotelDetails.vue"),
+          component: async () => await import("../views/HotelDetails.vue"),
         },
         {
           path: "trips",
-          component: () => import("@/views/MyTrips.vue"),
+          component: async () => await import("../views/MyTrips.vue"),
           meta: { requiresAuth: true },
         },
       ],
@@ -37,11 +37,11 @@ const router = createRouter({
       children: [
         {
           path: "signup",
-          component: () => import("@/views/auth/SignUp.vue"),
+          component: async () => await import("../views/auth/SignUp.vue"),
         },
         {
           path: "login",
-          component: () => import("@/views/auth/LogIn.vue"),
+          component: async() => await import("../views/auth/LogIn.vue"),
         },
       ],
     },
@@ -51,7 +51,7 @@ const router = createRouter({
       children: [
         {
           path: "",
-          component: () => import("@/views/CheckoutView.vue"),
+          component: async() => await import("../views/CheckoutView.vue"),
         },
       ],
     },
