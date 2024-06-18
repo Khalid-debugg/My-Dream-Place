@@ -8,8 +8,8 @@
       <div
         class="bg-[url('../src/assets/images/Rectangle.png')] flex bg-no-repeat w-[245px] justify-center"
       >
-        <img src="../assets/images/Frame-1.png" alt="" />
-        <img src="../assets/images/Frame.png" alt="" />
+        <img src="/assets/images/Frame-1.png" alt="" />
+        <img src="/assets/images/Frame.png" alt="" />
       </div>
       <div class="flex flex-col items-center gap-3">
         <h1 class="font-[600] text-[20px]">Welcome to My Dream Place</h1>

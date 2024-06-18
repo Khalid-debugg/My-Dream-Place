@@ -6,7 +6,7 @@
     <div class="relative text-center overflow-hidden">
       <img
         loading="lazy"
-        src="../assets/images/View.png"
+        src="/assets/images/View.png"
         alt="city view"
         class="mx-auto w-[1240px] h-[500px] object-cover"
       />
@@ -93,12 +93,12 @@
     </section>
     <div class="relative overflow-hidden min-h-[280px] mt-2 rounded-lg">
       <img
-        src="../assets/images/Home/Rectangle 18.png"
+        src="/assets/images/Home/Rectangle 18.png"
         class="object-cover min-h-[280px]"
         alt=""
       />
       <img
-        src="../assets/images/Home/smart-phone.png"
+        src="/assets/images/Home/smart-phone.png"
         class="smart-phone absolute top-[-100px] right-[20px] object-cover hidden sm:block"
         alt=""
       />

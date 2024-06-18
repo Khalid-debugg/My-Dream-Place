@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-2 mx-auto">
     <img
-      :src="`../src/assets/images/Home/${imgLink}`"
+      :src="`/assets/images/Home/${imgLink}`"
       :alt="placeName"
       loading="lazy"
     />

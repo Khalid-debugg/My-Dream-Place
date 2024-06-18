@@ -47,14 +47,14 @@
       <button>
         <img
           loading="lazy"
-          src="../assets/images/Notification.png"
+          src="/assets/images/Notification.png"
           alt="notification"
         />
       </button>
       <button>
         <img
           loading="lazy"
-          src="../assets/images/Profile.png"
+          src="/assets/images/Profile.png"
           alt="notification"
         />
       </button>
@@ -122,7 +122,7 @@
         <MenuButton
           class="flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-900"
         >
-          <img src="../assets/images/Profile.png" alt="" />
+          <img src="/assets/images/Profile.png" alt="" />
         </MenuButton>
 
         <transition

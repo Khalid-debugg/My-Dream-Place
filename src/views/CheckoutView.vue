@@ -60,7 +60,7 @@
                     class="flex bg-Gray justify-between items-center p-3 w-[150px] hover:cursor-pointer rounded"
                   >
                     <div class="flex gap-2">
-                      <img src="../assets/images/Australia.png" alt="" />
+                      <img src="/assets/images/Australia.png" alt="" />
                       <p>+61</p>
                     </div>
                     <svg
@@ -140,22 +140,22 @@
                   <div
                     class="w-[60px] h-[40px] rounded flex items-center justify-center bg-Gray"
                   >
-                    <img src="../assets/images/Mastercard.png" alt="" />
+                    <img src="/assets/images/Mastercard.png" alt="" />
                   </div>
                   <div
                     class="w-[60px] h-[40px] rounded flex items-center justify-center bg-Gray"
                   >
-                    <img src="../assets/images/Visa.png" alt="" />
+                    <img src="/assets/images/Visa.png" alt="" />
                   </div>
                   <div
                     class="w-[60px] h-[40px] rounded flex items-center justify-center bg-Gray"
                   >
-                    <img src="../assets/images/AmericanExpress.png" alt="" />
+                    <img src="/assets/images/AmericanExpress.png" alt="" />
                   </div>
                   <div
                     class="w-[60px] h-[40px] rounded flex items-center justify-center bg-Gray"
                   >
-                    <img src="../assets/images/Discover.png" alt="" />
+                    <img src="/assets/images/Discover.png" alt="" />
                   </div>
                 </div>
                 <div>

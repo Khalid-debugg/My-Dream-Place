@@ -1,7 +1,7 @@
 <template>
   <div class="relative mx-auto overflow-hidden">
     <img
-      :src="`../src/assets/images/Home/${imgLink}`"
+      :src="`/assets/images/Home/${imgLink}`"
       :alt="header"
       loading="lazy"
     />

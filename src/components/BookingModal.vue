@@ -8,7 +8,7 @@
       <div
         class="w-[240px] bg-[#6FCF97] bg-opacity-20 rounded-md p-8 flex justify-center items-center"
       >
-        <img src="../assets/images/successfull.png" alt="" />
+        <img src="/assets/images/successfull.png" alt="" />
       </div>
       <div class="flex flex-col gap-2">
         <h1 class="font-[600] text-[20px] text-center">Booking Successful</h1>

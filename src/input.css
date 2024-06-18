@@ -12,13 +12,13 @@
 }
 @font-face {
     font-family: 'SF Pro Display'; 
-    src: url('./assets/fonts/SF PRO/SFPRODISPLAYREGULAR') format('otf');
+    src: url('/public/assets/fonts/SF\ PRO/SFPRODISPLAYREGULAR') format('otf');
     font-weight: normal; 
     font-style: normal; 
   }
   @font-face {
     font-family: 'SF Pro Display Bold'; 
-    src: url('./assets/fonts/SF PRO/SFPRODISPLAYBOLD') format('otf');
+    src: url('/public/assets/fonts/SF\ PRO/SFPRODISPLAYREGULAR') format('otf');
     font-weight: normal; 
     font-style: normal; 
   }

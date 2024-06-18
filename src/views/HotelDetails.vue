@@ -1,10 +1,10 @@
 <template>
   <div class="bg-gradient-to-t from-white to-Gray border-b-2 pt-5">
     <div class="flex gap-5 justify-center flex-wrap">
-      <img src="../assets/images/room1.png" alt="" />
+      <img src="/assets/images/room1.png" alt="" />
       <div class="flex flex-col gap-5 mx-auto xl:mx-0">
-        <img src="../assets/images/room2.png" alt="" />
-        <img src="../assets/images/room3.png" alt="" />
+        <img src="/assets/images/room2.png" alt="" />
+        <img src="/assets/images/room3.png" alt="" />
       </div>
     </div>
     <nav class="bg-white pt-5 px-3 flex gap-3 w-[88%] mx-auto max-w-[1440px]">
@@ -157,7 +157,7 @@
             </p>
           </div>
           <img
-            src="../assets/images/Frame-2.png"
+            src="/assets/images/Frame-2.png"
             class="w-[177px] h-[291px] relative right-[2.5rem]"
             alt=""
           />
