@@ -29,7 +29,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/khalid-debugg/my-dream-place">
-    <img src="/assets/images/Plane Icon.png" alt="Logo" >
+    <img src="./public/assets/images/Plane Icon.png" alt="Logo" >
   </a>
 
 <h3 align="center">My Dream Place</h3>
@@ -74,7 +74,7 @@
 
 ## About The Project
 
-<img src="/assets/images/Screenshots/Home-screenshot.png" alt="screenshot" >
+<img src="./public/assets/images/Screenshots/Home-screenshot.png" alt="screenshot" >
 
 # My Dream Place
 
@@ -135,7 +135,7 @@ Welcome to our Hotel Booking Web App! This application is designed to provide us
 
 ### Search results page
 
-<img src="/assets/images/Screenshots/Search-screenshot.png" alt="screenshot" >
+<img src="/public./public/assets/images/Screenshots/Search-screenshot.png" alt="screenshot" >
 
 In this page you can:
 
@@ -148,7 +148,7 @@ In this page you can:
 
 ### Hotel Details page
 
-<img src="/assets/images/Screenshots/Hotel-screenshot.png" alt="screenshot" >
+<img src="./public/assets/images/Screenshots/Hotel-screenshot.png" alt="screenshot" >
 
 In this page you can browse the hotel details, and its nearby landmarks, and also browse the hotel rooms and its facilities and Reserve it.
 
@@ -156,13 +156,13 @@ In this page you can browse the hotel details, and its nearby landmarks, and als
 
 ### Checkout page
 
-<img src="/assets/images/Screenshots/Checkout-screenshot.png" alt="screenshot" >
+<img src="./public/assets/images/Screenshots/Checkout-screenshot.png" alt="screenshot" >
 
 In this page you can check the price details and confirm room booking
 
 ### Trips page
 
-<img src="/assets/images/Screenshots/Trips-screenshot.png" alt="screenshot" >
+<img src="./public/assets/images/Screenshots/Trips-screenshot.png" alt="screenshot" >
 
 In this page you can check your reserved trips with its details
 
@@ -208,7 +208,7 @@ Project Link: [https://github.com/khalid-debugg/my-dream-place](https://github.c
 [issues-url]: https://github.com/khalid-debugg/my-dream-place/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/khalidsherif1/
-[product-screenshot]: https://github.com/Khalid-debugg/My-Dream-Place/assets/images/Home/Home-screenshot.png
+[product-screenshot]: https://github.com/Khalid-debugg/My-Dream-Place./public/assets/images/Home/Home-screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
