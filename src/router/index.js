@@ -12,11 +12,14 @@ const router = createRouter({
       path: "/",
       component: DefaultLayout,
       children: [
-        { path: "", component: async () => await import("../views/HomeView.vue") },
-
+        {
+          path: "",
+          component: async () => await import("../views/HomeView.vue")
+        },
         {
           path: "hotel/:id",
           component: async () => await import("../views/HotelDetails.vue"),
+          meta: { requiresAuth: false },
         },
         {
           path: "trips",
@@ -29,7 +32,7 @@ const router = createRouter({
       path: "/search/results",
       component: SearchLayout,
       name: "search",
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: false },
     },
     {
       path: "/auth",

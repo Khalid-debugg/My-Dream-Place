@@ -6,7 +6,7 @@
     }"
   >
     <header>
-      <a href="#" class="flex gap-1"
+      <a @click="router.push('/')" class="flex gap-1 cursor-pointer"
         ><svg
           v-if="layout !== 'Search'"
           xmlns="http://www.w3.org/2000/svg"
@@ -37,8 +37,8 @@
       </a>
     </header>
     <ul class="font-sfNormal lg:flex gap-[48px] hidden">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Discover</a></li>
+      <li><a @click="router.push('/')" class="cursor-pointer">Home</a></li>
+      <li><a @click="router.push('/search/results')" class="cursor-pointer">Discover</a></li>
       <li><a href="#">Activities</a></li>
       <li><a href="#">About</a></li>
       <li><a href="#">Contact</a></li>
@@ -317,7 +317,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { useUserStore } from "../stores/userStore";
 import router from "../router";
-import { ref } from "vue";
+
 const props = defineProps(["layout"]);
 const userStore = useUserStore();
 </script>
