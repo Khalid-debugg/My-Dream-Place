@@ -406,47 +406,26 @@
 </template>
 
 <script setup>
-import config from "../../config";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import { useRoute } from "vue-router";
-import { ref, onMounted, onUnmounted, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import { useSearchStore } from "@/stores/searchStore";
-import { storeToRefs } from "pinia";
 import router from "../router/index";
+import { searchCities } from "../data/cities";
+
 const searchStore = useSearchStore();
-const { searchResults } = storeToRefs(searchStore);
-const dropDown = ref(false);
 const isGuestsSelected = ref(searchStore.adults);
 const isRoomsSelected = ref(searchStore.rooms);
 const isInputValid = ref(true);
 const cityInput = ref("");
 const cityOptions = ref([]);
 
-const getCityOptions = async () => {
-  const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=${cityInput.value}`;
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": config.apiKey,
-      "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-    },
-  };
-
-  try {
-    const response = await fetch(url, options);
-    if (response.status >= 400 && response.status < 500) {
-          throw new Error("The developer is currently broke, can't afford the premium api key 😢, contact here to refresh the freemium one ==> khalidsherif.dev@gmail.com , or buy your own and clone the project and inject it in the config file")
-        }
-    const data = await response.json();
-    cityOptions.value = computed(() =>
-      data?.data.filter((city) => city.search_type === "city")
-    );
-  } catch (error) {
-    alert(error.message)
-  }
+const getCityOptions = () => {
+  const results = searchCities(cityInput.value);
+  cityOptions.value = computed(() => results);
 };
+
 const format = (date) => {
   if (!date) {
     return "";
@@ -457,19 +436,13 @@ const format = (date) => {
 
   return `${month}-${day}-${year}`;
 };
-const selectCity = (cityOption) => {
-  searchStore.city = cityOption;
-};
+
 const searchHotels = async () => {
-  // if (
-  //   !searchStore.city ||
-  //   !searchStore.checkInDate ||
-  //   !searchStore.checkOutDate
-  // ) {
-  //   isInputValid.value = false;
-  //   setTimeout(() => (isInputValid.value = true), 1000);
-  //   return;
-  // }
+  if (!searchStore.city) {
+    isInputValid.value = false;
+    setTimeout(() => (isInputValid.value = true), 1000);
+    return;
+  }
   sessionStorage.clear();
   router.push({ path: "/search/results" });
   await searchStore.sendSearchRequest();
