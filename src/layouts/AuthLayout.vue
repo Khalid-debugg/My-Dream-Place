@@ -1,7 +1,7 @@
 <template>
   <nav class="flex items-center w-[85%] max-w-[1240px] mx-auto py-[22px]">
     <header>
-      <a href="#" class="flex gap-1"
+      <a @click="router.push('/')" class="flex gap-1 cursor-pointer"
         ><svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -34,6 +34,10 @@
   <router-view></router-view>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+</script>
 
 <style lang="scss" scoped></style>
