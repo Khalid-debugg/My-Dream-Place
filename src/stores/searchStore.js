@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
-import config from "../../config";
+import { searchHotels } from "../services/hotelApi";
+import { mapHotelToAppFormat } from "../services/mockData";
+
 export const useSearchStore = defineStore("search", {
   state: () => {
     return {
@@ -16,42 +18,57 @@ export const useSearchStore = defineStore("search", {
   },
   actions: {
     async sendSearchRequest(pageNumber, minPrice, maxPrice, sortID) {
-      const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=${
-        this.city.dest_id
-      }&search_type=CITY&arrival_date=${this.formatDate(
-        this.checkInDate
-      )}&departure_date=${this.formatDate(this.checkOutDate)}&adults=${
-        this.adults || 1
-      }&children_age=${this.children || 0}%2C17&room_qty=${
-        this.rooms || 1
-      }&page_number=${pageNumber || 1}&price_min=${minPrice || ""}&price_max=${
-        maxPrice || ""
-      }&sort_by=${sortID || ""}&languagecode=en-us&currency_code=USD`;
-      const options = {
-        method: "GET",
-        headers: {
-          "X-RapidAPI-Key": config.apiKey,
-          "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-        },
-      };
+      if (!this.city) {
+        throw new Error("Please select a city");
+      }
+
       try {
-        const response = await fetch(url, options);
-        if (response.status >= 400 && response.status < 500) {
-          throw new Error("The developer is currently broke, can't afford the premium api key 😢, contact here to refresh the freemium one khalidsherif.dev@gmail.com")
+        // Call the new hotels-api.com endpoint
+        const result = await searchHotels({
+          city: this.city.name,
+          country: this.city.country,
+          limit: 30, // Free tier limit
+        });
+
+        // Map the API response to match the existing app structure
+        const mappedHotels = result.hotels?.map(mapHotelToAppFormat) || [];
+
+        // Filter by price if specified
+        let filteredHotels = mappedHotels;
+        if (minPrice || maxPrice) {
+          filteredHotels = mappedHotels.filter((hotel) => {
+            const price = hotel.property.priceBreakdown?.grossPrice?.value || 0;
+            if (minPrice && price < minPrice) return false;
+            if (maxPrice && price > maxPrice) return false;
+            return true;
+          });
         }
-        const result = await response.json();
-        this.searchResults = result;
-        this.totalHotelsNumber =
-          parseInt(result.data.meta[0]?.title.split(" ")[0]) ||
-          this.totalHotelsNumber;
-        this.priceBreakdownList = result.data.hotels.map(
+
+        // Update state to match old structure
+        this.searchResults = {
+          data: {
+            hotels: filteredHotels,
+            meta: [
+              {
+                title: `${filteredHotels.length} hotels found`,
+              },
+            ],
+          },
+        };
+
+        this.totalHotelsNumber = filteredHotels.length;
+        this.priceBreakdownList = filteredHotels.map(
           (hotel) => hotel.property.priceBreakdown
         );
       } catch (error) {
-        alert(error.message);
+        console.error("Error searching hotels:", error);
+        alert(
+          "Unable to search hotels. Please check your internet connection and try again."
+        );
       }
     },
     formatDate(date) {
+      if (!date) return "";
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1);
       const day = String(date.getDate());
@@ -63,12 +80,13 @@ export const useSearchStore = defineStore("search", {
   persist: {
     afterRestore: (ctx) => {
       if (window.sessionStorage.getItem("search")) {
-        ctx.store.checkInDate = new Date(
-          JSON.parse(window.sessionStorage.getItem("search")).checkInDate
-        );
-        ctx.store.checkOutDate = new Date(
-          JSON.parse(window.sessionStorage.getItem("search")).checkOutDate
-        );
+        const stored = JSON.parse(window.sessionStorage.getItem("search"));
+        if (stored.checkInDate) {
+          ctx.store.checkInDate = new Date(stored.checkInDate);
+        }
+        if (stored.checkOutDate) {
+          ctx.store.checkOutDate = new Date(stored.checkOutDate);
+        }
       }
     },
     storage: sessionStorage,
