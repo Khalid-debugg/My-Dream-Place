@@ -28,3 +28,5 @@ coverage
 *.sw?
 #ignored files
 config.js
+.env
+.env.local
