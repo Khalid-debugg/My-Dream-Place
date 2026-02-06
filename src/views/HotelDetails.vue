@@ -179,6 +179,13 @@ import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import config from "../../config";
 import { useSearchStore } from "../stores/searchStore";
+import {
+  getMockHotelDescription,
+  getMockNearbyLandmarks,
+  getMockHotelBenefits,
+  getMockRoomList,
+} from "../services/mockData";
+
 const hotelID = computed(() => useRoute().params.id);
 const hotelDetails = ref(null);
 const hotelDescription = ref(null);
@@ -211,97 +218,47 @@ const activateIcon = (clickedIcon) => {
 const calcDriveTime = (distance) => {
   return Math.ceil((distance * 60) / 50);
 };
-onMounted(async () => {
-  const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=${
-    hotelID.value
-  }&arrival_date=${searchStore.formatDate(
-    searchStore.checkInDate
-  )}&departure_date=${searchStore.formatDate(
-    searchStore.checkOutDate
-  )}&adults=${searchStore.adults || 1}&children_age=${
-    searchStore.children || 0
-  }%2C17&room_qty=${
-    searchStore.rooms || 1
-  }&languagecode=en-us&currency_code=USD`;
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": config.apiKey,
-      "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-    },
-  };
 
+// Load hotel details from search results or mock data
+onMounted(() => {
   try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    hotelDetails.value = result.data;
-    hotelBenefits.value = hotelDetails.value.top_ufi_benefits;
-  } catch (error) {
-    console.error(error);
-  }
-});
-onMounted(async () => {
-  const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getDescriptionAndInfo?hotel_id=${hotelID.value}&languagecode=en-us`;
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": config.apiKey,
-      "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-    },
-  };
+    // Try to find the hotel from search results
+    const hotels = searchStore.searchResults?.data?.hotels || [];
+    const hotel = hotels.find((h) => h.property.id == hotelID.value);
 
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    hotelDescription.value = result.data;
-  } catch (error) {
-    console.error(error);
-  }
-});
-onMounted(async () => {
-  const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getPopularAttractionNearBy?hotel_id=${hotelID.value}&languagecode=en-us`;
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": config.apiKey,
-      "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-    },
-  };
+    if (hotel) {
+      // Map hotel data to the expected format
+      hotelDetails.value = {
+        hotel_name: hotel.property.name,
+        latitude: hotel.property.latitude,
+        longitude: hotel.property.longitude,
+        address: searchStore.city?.name || "City Center",
+        city: searchStore.city?.name,
+        country_trans: searchStore.city?.country,
+      };
 
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    nearbyLandmarks.value = result.data.popular_landmarks;
+      // Use mock data for features not available in the API
+      hotelDescription.value = getMockHotelDescription(hotel.property.name);
+      hotelBenefits.value = getMockHotelBenefits();
+      nearbyLandmarks.value = getMockNearbyLandmarks(searchStore.city?.name);
+      hotelRooms.value = getMockRoomList(hotel.property.name);
+    } else {
+      // Fallback to mock data if hotel not found
+      hotelDetails.value = {
+        hotel_name: "Hotel Not Found",
+        latitude: 0,
+        longitude: 0,
+        address: "N/A",
+        city: "N/A",
+        country_trans: "N/A",
+      };
+      hotelDescription.value = getMockHotelDescription("This Hotel");
+      hotelBenefits.value = getMockHotelBenefits();
+      nearbyLandmarks.value = getMockNearbyLandmarks();
+      hotelRooms.value = getMockRoomList("This Hotel");
+    }
   } catch (error) {
-    console.error(error);
-  }
-});
-onMounted(async () => {
-  const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getRoomList?hotel_id=${
-    hotelID.value
-  }&arrival_date=${searchStore.formatDate(
-    searchStore.checkInDate
-  )}&departure_date=${searchStore.formatDate(
-    searchStore.checkOutDate
-  )}&adults=${searchStore.adults || 1}&children_age=${
-    searchStore.children || 0
-  }%2C17&room_qty=${
-    searchStore.rooms || 1
-  }&languagecode=en-us&currency_code=USD`;
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": config.apiKey,
-      "X-RapidAPI-Host": "booking-com15.p.rapidapi.com",
-    },
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    hotelRooms.value = result.data.rooms;
-  } catch (error) {
-    console.error(error);
+    console.error("Error loading hotel details:", error);
   }
 });
 </script>
