@@ -1,6 +1,6 @@
 const config = {
-  apiKey: "GENERATE_YOUR_OWN_KEY",
-  mapKey: "GENERATE_YOUR_OWN_KEY",
+  mapKey: import.meta.env.VITE_GOOGLE_MAPS_KEY || "GENERATE_YOUR_OWN_KEY",
+  hotelsApiKey: import.meta.env.VITE_HOTELS_API_KEY,
 };
 
 export default config;
