@@ -4,7 +4,7 @@
   >
     <img
       class="min-w-[285px] h-[200px] rounded-md object-cover"
-      :src="photoUrl"
+      :src="displayImage"
       alt=""
     />
     <div class="flex flex-col w-full">
@@ -42,7 +42,7 @@
                 priceBreakDown: priceBreakDown,
                 checkInDate: new Date(searchStore.checkInDate),
                 checkOutDate: new Date(searchStore.checkOutDate),
-                photoUrl: photoUrl,
+                photoUrl: displayImage,
               };
               router.push({
                 path: `/hotel/${hotelID}`,
@@ -77,9 +77,11 @@
 
 <script setup>
 import router from "../router";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { useUserStore } from "../stores/userStore";
 import { useSearchStore } from "../stores/searchStore";
+import { getRandomHotelImage } from "../services/hotelImages";
+
 const userStore = useUserStore();
 const searchStore = useSearchStore();
 const props = defineProps([
@@ -91,6 +93,27 @@ const props = defineProps([
   "hotelDescription",
   "priceBreakDown",
 ]);
+
+// Use random image if photoUrl is not provided or is a placeholder
+const displayImage = computed(() => {
+  // Check if photoUrl is a local asset (room1.png, room2.png, etc.) or placeholder
+  const isLocalAsset = props.photoUrl && (
+    props.photoUrl.includes('/assets/images/room') ||
+    props.photoUrl.includes('placeholder') ||
+    props.photoUrl === ''
+  );
+
+  // If it's a valid external URL (starts with http), use it
+  const isExternalUrl = props.photoUrl && props.photoUrl.startsWith('http');
+
+  if (isExternalUrl) {
+    return props.photoUrl;
+  }
+
+  // Otherwise use random image based on hotel ID
+  return getRandomHotelImage(props.hotelID);
+});
+
 const strikeThroughAmount = ref(
   Math.round(props.priceBreakDown.strikethroughPrice?.value)
 );
